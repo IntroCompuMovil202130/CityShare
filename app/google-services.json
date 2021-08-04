@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "480149110292",
+    "project_id": "cityshare-5a480",
+    "storage_bucket": "cityshare-5a480.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480149110292:android:0aeb102e17b7b3fbbc3101",
+        "android_client_info": {
+          "package_name": "main.cityshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480149110292-3422kv8qp399rnipqahr7hv553kfjitn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3zPZsxcGwlSZCSjavDhb_oqJpS5_4dyU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480149110292-3422kv8qp399rnipqahr7hv553kfjitn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

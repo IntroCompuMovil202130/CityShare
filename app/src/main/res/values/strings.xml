@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CityShare</string>
+    <string name="Bienvenida">Bienvenido a City Share</string>
+    <string name="LogIn">Ingrese su usuario y contraseña</string>
+    <string name="Correo">Correo</string>
+    <string name="PSW">Contraseña</string>
+</resources>
