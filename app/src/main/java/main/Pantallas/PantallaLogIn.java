@@ -30,6 +30,6 @@ public class PantallaLogIn extends AppCompatActivity {
     private void inflate(){
         correo = findViewById(R.id.correoLogIn);
         password = findViewById(R.id.pswLogIn);
-        logIn = findViewById(R.id.botonLogIn);
+        logIn = findViewById(R.id.boton);
     }
 }

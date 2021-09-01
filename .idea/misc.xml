@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/ProyectosAndroid/CityShare/app/src/main/res/layout/activity_main.xml" value="0.20244565217391305" />
+        <entry key="..\:/ProyectosAndroid/CityShare/app/src/main/res/layout/activity_sign_up.xml" value="0.1816123188405797" />
         <entry key="..\:/ProyectosAndroid/CityShare/app/src/main/res/layout/pantallaLogIn.xml" value="0.20244565217391305" />
+        <entry key="..\:/ProyectosAndroid/CityShare/app/src/main/res/layout/pantallalogin.xml" value="0.25" />
       </map>
     </option>
   </component>
