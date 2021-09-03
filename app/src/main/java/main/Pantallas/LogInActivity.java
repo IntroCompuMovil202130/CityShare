@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class PantallaLogIn extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity {
     EditText correo;
     EditText password;
     Button logIn;
@@ -16,7 +16,7 @@ public class PantallaLogIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pantallalogin);
+        setContentView(R.layout.activity_log_in);
 
         inflate();
 

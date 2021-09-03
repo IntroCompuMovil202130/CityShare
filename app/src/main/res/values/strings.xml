@@ -4,8 +4,8 @@
     <string name="IngresoDatos">Ingrese su usuario y contraseña</string>
     <string name="Correo">Correo</string>
     <string name="PSW">Contraseña</string>
-    <string name="login">Log In</string>
-    <string name="signup">Sign Up</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="signup">Crear cuenta</string>
     <string name="crearcuenta">Ingrese los siguientes datos para crear la cuenta</string>
     <string name="password">Contraseña</string>
 </resources>
