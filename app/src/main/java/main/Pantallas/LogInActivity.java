@@ -2,6 +2,7 @@ package main.Pantallas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,14 +20,12 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         inflate();
-
-        logIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Se hara inicio de sesión",Toast.LENGTH_SHORT).show();
-            }
-        });
     }
+
+    public void launchPrincipalActivity(View v){
+        startActivity(new Intent(this,PrincipalActivity.class));
+    }
+
     private void inflate(){
         correo = findViewById(R.id.correoLogIn);
         password = findViewById(R.id.pswLogIn);
