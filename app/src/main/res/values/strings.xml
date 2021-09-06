@@ -6,9 +6,14 @@
     <string name="PSW">Contraseña</string>
     <string name="login">Iniciar sesión</string>
     <string name="signup">Crear cuenta</string>
-    <string name="crearcuenta">Ingrese los siguientes datos para crear la cuenta</string>
+    <string name="crearcuenta">¡Crea una cuenta!</string>
     <string name="password">Contraseña</string>
+    <string name="confirmPassword">Confirma tu contraseña</string>
     <string name="historias">Mis historias</string>
     <string name="chat">Chat</string>
     <string name="guess">Selecciona donde crees que está</string>
+    <string name="register"><b><u>Regístrate aquí</u></b></string>
+    <string name="newUser">¿Eres nuevo?</string>
+    <string name="user">Usuario</string>
+    <string name="send">Enviar</string>
 </resources>

@@ -25,7 +25,9 @@ public class LogInActivity extends AppCompatActivity {
     public void launchPrincipalActivity(View v){
         startActivity(new Intent(this,PrincipalActivity.class));
     }
-
+    public void launchSignUpActivity(View v){
+        startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+    }
     private void inflate(){
         correo = findViewById(R.id.correoLogIn);
         password = findViewById(R.id.pswLogIn);
