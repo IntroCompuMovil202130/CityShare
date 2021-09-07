@@ -44,6 +44,6 @@ public class PrincipalActivity extends AppCompatActivity {
         botonCrearPost = findViewById(R.id.botonPost);
         botonHistorias = findViewById(R.id.botonHistorias);
         chat = findViewById(R.id.botonChat);
-        imagenEjemplo = findViewById(R.id.imagenEjemplo);
+        imagenEjemplo = findViewById(R.id.imageView5);
     }
 }

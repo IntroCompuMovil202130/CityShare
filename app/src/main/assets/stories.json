@@ -1,0 +1,28 @@
+{
+  "stories": [
+    {
+      "picture": 1,
+      "status": 1,
+      "guesses": 81,
+      "distance": 5680
+    },
+    {
+      "picture": 2,
+      "status": 1,
+      "guesses": 60,
+      "distance": 12045
+    },
+    {
+      "picture": 3,
+      "status": 0,
+      "guesses": 0,
+      "distance": 5810
+    },
+    {
+      "picture": 4,
+      "status": 1,
+      "guesses": 8,
+      "distance": 680
+    }
+  ]
+}

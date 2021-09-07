@@ -8,7 +8,9 @@
     <string name="signup">Crear cuenta</string>
     <string name="crearcuenta">Ingrese los siguientes datos para crear la cuenta</string>
     <string name="password">Contraseña</string>
-    <string name="historias">Mis historias</string>
-    <string name="chat">Chat</string>
+    <string name="historias">Historial</string>
+    <string name="retos">Retar</string>
+    <string name="name_profile">Ricardo Richardson</string>
+    <string name="welcome">Bienvenido</string>
     <string name="guess">Selecciona donde crees que está</string>
 </resources>

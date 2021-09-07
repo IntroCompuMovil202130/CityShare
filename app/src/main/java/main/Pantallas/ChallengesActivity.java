@@ -3,7 +3,6 @@ package main.Pantallas;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,34 +14,30 @@ import java.util.List;
 import main.DTOs.FilaJugador;
 import main.DTOs.FilaStory;
 
-public class StoryActivity extends AppCompatActivity {
-    ListView listaPosts;
+public class ChallengesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_story);
+        setContentView(R.layout.activity_challenges);
 
-        listaPosts = findViewById(R.id.listaPosts);
-        List<FilaStory> filaStories = getFromJSON();
-
+        List<FilaJugador> filaJugadors = getFromJSON();
     }
 
-    private List<FilaStory> getFromJSON() {
-        List<FilaStory> result = new ArrayList<>();
+    private List<FilaJugador> getFromJSON() {
+        List<FilaJugador> result = new ArrayList<>();
         //Crear un arreglo de paises del JSON
         try {
-            JSONObject obj = new JSONObject(cargarJSON("stories.json"));
-            JSONArray arreglo = obj.getJSONArray("stories");
+            JSONObject obj = new JSONObject(cargarJSON("challenges.json"));
+            JSONArray arreglo = obj.getJSONArray("challenges");
 
             for (int i = 0; i < arreglo.length(); i++) {
                 JSONObject object = arreglo.getJSONObject(i);
                 Integer pictureRef = object.getInt("picture");
-                String status = object.getString("status");
-                Integer guesses = object.getInt("guesses");
-                Double distance = object.getDouble("distance");
+                String name = object.getString("name");
+                String content = object.getString("content");
 
-                FilaStory elemento = new FilaStory(pictureRef, status, guesses, distance);
+                FilaJugador elemento = new FilaJugador(pictureRef, name, content);
                 result.add(elemento);
             }
         } catch (Exception e) {
