@@ -58,20 +58,21 @@ public class FilaStoryAdapter extends ArrayAdapter {
 
         switch (filaStory.getPicture()) {
             case 1:
-                picture.setImageResource(R.drawable.camera);
+                picture.setImageResource(R.drawable.miami);
             case 2:
-                picture.setImageResource(R.drawable.camera);
+                picture.setImageResource(R.drawable.boston);
             case 3:
-                picture.setImageResource(R.drawable.camera);
+                picture.setImageResource(R.drawable.london);
             case 4:
-                picture.setImageResource(R.drawable.camera);
+                picture.setImageResource(R.drawable.miami);
             case 5:
-                picture.setImageResource(R.drawable.camera);
+                picture.setImageResource(R.drawable.boston);
             case 6:
-                picture.setImageResource(R.drawable.camera);
+                picture.setImageResource(R.drawable.london);
             default:
-                picture.setImageResource(R.drawable.camera);
+                picture.setImageResource(R.drawable.miami);
         }
+
 
         status.setText(filaStory.getStatus());
         guesses.setText(filaStory.getGuesses().toString());

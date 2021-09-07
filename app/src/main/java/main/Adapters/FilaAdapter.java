@@ -52,23 +52,24 @@ public class FilaAdapter extends ArrayAdapter {
         TextView nombre = (TextView) convertView.findViewById(R.id.nombre);
         TextView contenido = (TextView) convertView.findViewById(R.id.contenido);
 
-        switch (filaJugador.getPicture()) {
-            case 1:
-                picture.setImageResource(R.drawable.camera);
-            case 2:
-                picture.setImageResource(R.drawable.camera);
-            case 3:
-                picture.setImageResource(R.drawable.camera);
-            case 4:
-                picture.setImageResource(R.drawable.camera);
-            case 5:
-                picture.setImageResource(R.drawable.camera);
-            case 6:
-                picture.setImageResource(R.drawable.camera);
-            default:
-                picture.setImageResource(R.drawable.camera);
-        }
+//        switch (filaJugador.getPicture()) {
+//            case 1:
+//                picture.setImageResource(R.drawable.world);
+//            case 2:
+//                picture.setImageResource(R.drawable.camera);
+//            case 3:
+//                picture.setImageResource(R.drawable.camera);
+//            case 4:
+//                picture.setImageResource(R.drawable.camera);
+//            case 5:
+//                picture.setImageResource(R.drawable.camera);
+//            case 6:
+//                picture.setImageResource(R.drawable.camera);
+//            default:
+//                picture.setImageResource(R.drawable.world);
+//        }
 
+        picture.setImageResource(R.drawable.user);
         nombre.setText(filaJugador.getName());
         contenido.setText(filaJugador.getContent());
 
