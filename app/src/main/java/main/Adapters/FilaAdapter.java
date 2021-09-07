@@ -1,6 +1,7 @@
 package main.Adapters;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,9 @@ public class FilaAdapter extends ArrayAdapter {
 
         picture.setImageResource(R.drawable.user);
         nombre.setText(filaJugador.getName());
-        contenido.setText(filaJugador.getContent());
+
+        String sourceString = filaJugador.getContent();
+        contenido.setText(Html.fromHtml(sourceString));
 
         return convertView;
     }
