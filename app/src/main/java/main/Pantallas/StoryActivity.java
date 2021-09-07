@@ -12,11 +12,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Adapters.FilaAdapter;
+import main.Adapters.FilaStoryAdapter;
 import main.DTOs.FilaJugador;
 import main.DTOs.FilaStory;
 
 public class StoryActivity extends AppCompatActivity {
     ListView listaPosts;
+    FilaStoryAdapter filaStoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,11 @@ public class StoryActivity extends AppCompatActivity {
 
         listaPosts = findViewById(R.id.listaPosts);
         List<FilaStory> filaStories = getFromJSON();
+
+
+        filaStoryAdapter = new FilaStoryAdapter(this, 0, filaStories);
+        listaPosts.setAdapter(filaStoryAdapter);
+        listaPosts.setClickable(true);
 
     }
 
