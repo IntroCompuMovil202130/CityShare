@@ -11,4 +11,13 @@
     <string name="historias">Mis historias</string>
     <string name="chat">Chat</string>
     <string name="guess">Selecciona donde crees que está</string>
+    <string name="enviar">Enviar</string>
+    <string name="retar">Retar</string>
+    <string name="suma">más</string>
+    <string name="nombre">Kevin Android</string>
+    <string name="ems">Escribe un mensaje</string>
+    <string name="stats">Ver Estadisticas</string>
+    <string name="close">Cerrar</string>
+    <string name="guess1">Adivinar</string>
+    <string name="adivin">Adivina!</string>
 </resources>
