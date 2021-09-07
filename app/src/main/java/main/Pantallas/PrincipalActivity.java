@@ -32,13 +32,15 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     public void launchPostsActivity(View v){
-        startActivity(new Intent(this, PostsActivity.class));
+        startActivity(new Intent(this, PostsActivity.class));  //cambiar para que venga desde la actitividad de Menchu con botón de "adivinar"
     }
+
     public void launchStoryActivity(View v){
         startActivity(new Intent(this,StoryActivity.class));
     }
+
     public void launchChatActivity(View v){
-        startActivity(new Intent(this,ChatActivity.class));
+        startActivity(new Intent(this,ChallengesActivity.class));
     }
     private void inflate() {
         botonCrearPost = findViewById(R.id.botonPost);
