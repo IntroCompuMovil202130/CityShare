@@ -32,10 +32,10 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     public void launchPostsActivity(View v){
-        startActivity(new Intent(this, StoryActivity.class));
+        startActivity(new Intent(this, PostsActivity.class));
     }
     public void launchStoryActivity(View v){
-        startActivity(new Intent(this,ChallengesActivity.class));
+        startActivity(new Intent(this,StoryActivity.class));
     }
     public void launchChatActivity(View v){
         startActivity(new Intent(this,ChatActivity.class));
