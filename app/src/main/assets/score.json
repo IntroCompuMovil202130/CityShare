@@ -1,0 +1,34 @@
+{
+  "scores": [
+    {
+      "picture": 1,
+      "name": "Nicolás Arturo",
+      "content": "+150"
+    },
+    {
+      "picture": 2,
+      "name": "Felipe Parra",
+      "content": "+145"
+    },
+    {
+      "picture": 3,
+      "name": "Fernanda Salgado",
+      "content": "+130"
+    },
+    {
+      "picture": 4,
+      "name": "Fernando Parra",
+      "content": "+120"
+    },
+    {
+      "picture": 5,
+      "name": "Nicolás Arturo",
+      "content": "+110"
+    },
+    {
+      "picture": 6,
+      "name": "Camilo Martínez",
+      "content": "+80"
+    }
+  ]
+}
