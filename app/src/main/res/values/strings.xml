@@ -16,4 +16,12 @@
     <string name="estado">Estado: </string>
     <string name="adivinanzas"><b>No. adivinanzas: </b></string>
     <string name="distancia"><b>Dist. promedio: </b></string>
+    <string name="enviar">Enviar</string>
+    <string name="suma">más</string>
+    <string name="nombre">Kevin Android</string>
+    <string name="ems">Escribe un mensaje</string>
+    <string name="stats">Ver Estadisticas</string>
+    <string name="close">Cerrar</string>
+    <string name="guess1">Adivinar</string>
+    <string name="adivin">Adivina!</string>
 </resources>
