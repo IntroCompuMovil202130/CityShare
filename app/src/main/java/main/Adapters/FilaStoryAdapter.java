@@ -1,6 +1,7 @@
 package main.Adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
 
 import java.util.List;
 
@@ -54,7 +56,23 @@ public class FilaStoryAdapter extends ArrayAdapter {
         TextView guesses = (TextView) convertView.findViewById(R.id.noAdivinanzas);
         TextView distance = (TextView) convertView.findViewById(R.id.distPromedio);
 
-        picture.setImageDrawable(filaStory.getPicture());
+        switch (filaStory.getPicture()) {
+            case 1:
+                picture.setImageResource(R.drawable.camera);
+            case 2:
+                picture.setImageResource(R.drawable.camera);
+            case 3:
+                picture.setImageResource(R.drawable.camera);
+            case 4:
+                picture.setImageResource(R.drawable.camera);
+            case 5:
+                picture.setImageResource(R.drawable.camera);
+            case 6:
+                picture.setImageResource(R.drawable.camera);
+            default:
+                picture.setImageResource(R.drawable.camera);
+        }
+
         status.setText(filaStory.getStatus());
         guesses.setText(filaStory.getGuesses().toString());
         distance.setText(filaStory.getDistance().toString());

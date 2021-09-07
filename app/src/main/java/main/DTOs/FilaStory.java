@@ -3,7 +3,7 @@ package main.DTOs;
 import android.graphics.drawable.Drawable;
 
 public class FilaStory {
-    private Drawable picture;
+    private Integer picture;
     private String status;
     private Integer guesses;
     private Double distance;
@@ -11,18 +11,18 @@ public class FilaStory {
     public FilaStory() {
     }
 
-    public FilaStory(Drawable picture, String status, Integer guesses, Double distance) {
+    public FilaStory(Integer picture, String status, Integer guesses, Double distance) {
         this.picture = picture;
         this.status = status;
         this.guesses = guesses;
         this.distance = distance;
     }
 
-    public Drawable getPicture() {
+    public Integer getPicture() {
         return picture;
     }
 
-    public void setPicture(Drawable picture) {
+    public void setPicture(Integer picture) {
         this.picture = picture;
     }
 

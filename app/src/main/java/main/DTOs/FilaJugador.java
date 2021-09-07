@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable;
 import main.Pantallas.R;
 
 public class FilaJugador {
-    private Drawable picture;
+    private Integer picture;
     private String name;
     private String content;
 
@@ -14,17 +14,17 @@ public class FilaJugador {
     public FilaJugador() {
     }
 
-    public FilaJugador(Drawable picture, String name, String content) {
+    public FilaJugador(Integer picture, String name, String content) {
         this.picture = picture;
         this.name = name;
         this.content = content;
     }
 
-    public Drawable getPicture() {
+    public Integer getPicture() {
         return picture;
     }
 
-    public void setPicture(Drawable picture) {
+    public void setPicture(Integer picture) {
         this.picture = picture;
     }
 
