@@ -2,6 +2,7 @@ package main.Adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,26 +57,32 @@ public class FilaStoryAdapter extends ArrayAdapter {
         TextView guesses = (TextView) convertView.findViewById(R.id.noAdivinanzas);
         TextView distance = (TextView) convertView.findViewById(R.id.distPromedio);
 
-        switch (filaStory.getPicture()) {
-            case 1:
-                picture.setImageResource(R.drawable.camera);
-            case 2:
-                picture.setImageResource(R.drawable.camera);
-            case 3:
-                picture.setImageResource(R.drawable.camera);
-            case 4:
-                picture.setImageResource(R.drawable.camera);
-            case 5:
-                picture.setImageResource(R.drawable.camera);
-            case 6:
-                picture.setImageResource(R.drawable.camera);
-            default:
-                picture.setImageResource(R.drawable.camera);
-        }
 
-        status.setText(filaStory.getStatus());
-        guesses.setText(filaStory.getGuesses().toString());
-        distance.setText(filaStory.getDistance().toString());
+//        switch (filaStory.getPicture()) {
+//            case 1:
+//                picture.setImageResource(R.drawable.miami);
+//            case 2:
+//                picture.setImageResource(R.drawable.boston);
+//            case 3:
+//                picture.setImageResource(R.drawable.london);
+//            case 4:
+//                picture.setImageResource(R.drawable.miami);
+//            case 5:
+//                picture.setImageResource(R.drawable.boston);
+//            case 6:
+//                picture.setImageResource(R.drawable.london);
+//            default:
+//                picture.setImageResource(R.drawable.miami);
+//        }
+
+        picture.setImageResource(R.drawable.miami3);
+
+        String sourceString = "<b>Estado: </b>" + filaStory.getStatus();
+        status.setText(Html.fromHtml(sourceString));
+        sourceString = "<b>No. Adivinanzas: </b>" + filaStory.getGuesses();
+        guesses.setText(Html.fromHtml(sourceString));
+        sourceString = "<b>Dist. Promedio: </b>" + filaStory.getDistance();
+        distance.setText(Html.fromHtml(sourceString));
 
         return convertView;
     }

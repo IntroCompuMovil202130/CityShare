@@ -3,6 +3,7 @@ package main.Pantallas;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,17 +12,26 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Adapters.FilaAdapter;
 import main.DTOs.FilaJugador;
 import main.DTOs.FilaStory;
 
 public class ChallengesActivity extends AppCompatActivity {
 
+    FilaAdapter filaAdapter;
+    ListView lista;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenges);
+        lista = findViewById(R.id.challengesList);
 
         List<FilaJugador> filaJugadors = getFromJSON();
+
+        filaAdapter = new FilaAdapter(this, 0, filaJugadors);
+        lista.setAdapter(filaAdapter);
+        lista.setClickable(true);
     }
 
     private List<FilaJugador> getFromJSON() {
