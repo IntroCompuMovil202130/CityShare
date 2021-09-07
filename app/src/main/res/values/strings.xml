@@ -11,4 +11,7 @@
     <string name="historias">Mis historias</string>
     <string name="chat">Chat</string>
     <string name="guess">Selecciona donde crees que está</string>
+    <string name="estado">Estado: </string>
+    <string name="adivinanzas"><b>No. adivinanzas: </b></string>
+    <string name="distancia"><b>Dist. promedio: </b></string>
 </resources>
