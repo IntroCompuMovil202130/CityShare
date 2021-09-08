@@ -77,7 +77,7 @@ public class FilaStoryAdapter extends ArrayAdapter {
 
         picture.setImageResource(R.drawable.miami3);
 
-        String sourceString = "<b>Estado: </b>" + filaStory.getStatus();
+        String sourceString = "<b>Estado: </b>" + "Disponible";
         status.setText(Html.fromHtml(sourceString));
         sourceString = "<b>No. Adivinanzas: </b>" + filaStory.getGuesses();
         guesses.setText(Html.fromHtml(sourceString));

@@ -30,5 +30,7 @@
         android:layout_weight="1.5"
         android:text="TextView"
         android:textSize="15sp"
-        android:textColor="#008000"/>
+        android:textColor="#008000"
+        android:background="#dfd"
+        />
 </LinearLayout>

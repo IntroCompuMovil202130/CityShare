@@ -30,4 +30,6 @@
     <string name="stats">Ver Estadisticas</string>
     <string name="close">Cerrar</string>
     <string name="adivin"><b>Adivina!</b></string>
+    <string name="score">Score</string>
+
 </resources>
