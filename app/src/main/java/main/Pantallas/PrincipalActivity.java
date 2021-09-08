@@ -26,7 +26,7 @@ public class PrincipalActivity extends AppCompatActivity {
         imagenEjemplo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),GuessActivity.class));
+                startActivity(new Intent(getApplicationContext(),preguessActivity.class));
             }
         });
     }
@@ -46,6 +46,6 @@ public class PrincipalActivity extends AppCompatActivity {
         botonCrearPost = findViewById(R.id.botonPost);
         botonHistorias = findViewById(R.id.botonHistorias);
         chat = findViewById(R.id.botonChat);
-        imagenEjemplo = findViewById(R.id.imageView5);
+        imagenEjemplo = findViewById(R.id.imageView6);
     }
 }

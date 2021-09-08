@@ -15,8 +15,8 @@
         <ImageView
             android:layout_width="48sp"
             android:layout_height="48sp"
-            android:background="@drawable/edit_t"
             android:src="@drawable/fotop"
+            android:background="@null"
             android:layout_marginRight="20dp"
             tools:ignore="MissingClass">
 
