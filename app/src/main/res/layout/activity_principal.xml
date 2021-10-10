@@ -44,10 +44,30 @@
 
     <ImageButton
         android:id="@+id/botonPost"
+<<<<<<< Updated upstream
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+=======
+        android:layout_width="34dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="228dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:onClick="launchPostsActivity"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toEndOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/camera" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+>>>>>>> Stashed changes
         android:background="@null"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,8 +75,13 @@
         app:srcCompat="@drawable/camera"
         android:onClick="launchPostsActivity"/>
 
+<<<<<<< Updated upstream
     <ImageView
         android:id="@+id/imagenEjemplo"
+=======
+    <TextView
+        android:id="@+id/regist"
+>>>>>>> Stashed changes
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -68,6 +93,21 @@
         app:srcCompat="@drawable/ejemplo_story"
         android:focusable="true"
         android:clickable="true"/>
+
+    <ImageButton
+        android:id="@+id/signOut"
+        android:layout_width="63dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:maxWidth="42dp"
+        android:maxHeight="42dp"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.852"
+        app:layout_constraintStart_toEndOf="@+id/botonPost"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/signout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

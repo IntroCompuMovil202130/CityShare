@@ -60,13 +60,40 @@
         android:id="@+id/boton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
         android:layout_marginTop="36dp"
+=======
+        android:layout_marginTop="48dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="@font/montserrat"
+        android:onClick="signInPressed"
+>>>>>>> Stashed changes
         android:text="@string/login"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+<<<<<<< Updated upstream
         app:layout_constraintTop_toBottomOf="@+id/pswLogIn"
         android:onClick="launchPrincipalActivity"/>
+=======
+        app:layout_constraintTop_toBottomOf="@+id/boton" />
+
+    <TextView
+        android:id="@+id/regist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="60dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="launchSignUpActivity"
+        android:text="@string/register"
+        android:textColor="#5597FB"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/boton" />
+>>>>>>> Stashed changes
 
 </androidx.constraintlayout.widget.ConstraintLayout>
