@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -20,7 +21,7 @@ public class PrincipalActivity extends AppCompatActivity {
     public static final int GALLERY_ID_PERMISSION = 5001;
     public static final int CAMERA_ID_PERMISSION = 5002;
     public static final int IMAGE_PICK_ACTIVITY = 9;
-    public static final int TAKE_PICTURE_ACTIVITY = 9;
+    public static final int TAKE_PICTURE_ACTIVITY = 10;
 
     ImageButton botonCrearPostCamara;
     ImageButton botonCrearPostGaleria;
@@ -114,6 +115,7 @@ public class PrincipalActivity extends AppCompatActivity {
         else if(requestCode == CAMERA_ID_PERMISSION ){
             if(checkSelfPermission(Manifest.permission.CAMERA)
                     == PackageManager.PERMISSION_GRANTED){
+
                 takePicture();
             }
         }
@@ -123,8 +125,15 @@ public class PrincipalActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        System.out.println("Req code " + requestCode);
         if(resultCode == RESULT_OK && requestCode == IMAGE_PICK_ACTIVITY){
             historiaUsuario.setImageURI(data.getData());
+        }
+
+        else if(resultCode == RESULT_OK && requestCode == TAKE_PICTURE_ACTIVITY){
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            historiaUsuario.setImageBitmap(imageBitmap);
         }
     }
 
