@@ -180,11 +180,11 @@
         android:layout_marginTop="16dp"
         android:background="@null"
         android:scaleType="fitCenter"
+        android:src="@drawable/signout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/botonPost"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/homeAsUpIndicator"
         tools:srcCompat="@drawable/signout" />
 
 
