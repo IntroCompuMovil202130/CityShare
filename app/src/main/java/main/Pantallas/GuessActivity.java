@@ -80,8 +80,6 @@ public class GuessActivity extends AppCompatActivity {
 
         checkGPS();
 
-        initializeMarker();
-
         task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
@@ -94,15 +92,17 @@ public class GuessActivity extends AppCompatActivity {
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
-                Location l = locationResult.getLastLocation();
-                location.setLongitude(l.getLongitude());
-                location.setLatitude(l.getLatitude());
-                location.setAltitude(l.getAltitude());
-                if(locationMarker != null)
-                    map.getOverlays().remove(locationMarker);
-                locationMarker = createMarker(location,"Estas aqui",null);
-                map.getOverlays().add(locationMarker);
-                map.invalidate();
+                if(location != null) {
+                    Location l = locationResult.getLastLocation();
+                    location.setLongitude(l.getLongitude());
+                    location.setLatitude(l.getLatitude());
+                    location.setAltitude(l.getAltitude());
+                    if (locationMarker != null)
+                        map.getOverlays().remove(locationMarker);
+                    locationMarker = createMarker(location, "Estas aqui", null);
+                    map.getOverlays().add(locationMarker);
+                    map.invalidate();
+                }
             }
         };
         lightSensorListener = new SensorEventListener() {
@@ -126,8 +126,21 @@ public class GuessActivity extends AppCompatActivity {
         map.getOverlays().add(createOverlayEvents());
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_REQ) {
+            if (grantResults.length > 0 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initializeMarker();
+            } else {
+                Toast.makeText(getApplicationContext(), "Necesitamos ubicacion", Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
     private MapEventsOverlay createOverlayEvents() {
-        MapEventsOverlay eventsOverlay = new MapEventsOverlay(new MapEventsReceiver() {
+        return new MapEventsOverlay(new MapEventsReceiver() {
             @Override
             public boolean singleTapConfirmedHelper(GeoPoint p) {
                 return false;
@@ -139,7 +152,6 @@ public class GuessActivity extends AppCompatActivity {
                 return true;
             }
         });
-        return eventsOverlay;
     }
 
     private void longPressOnMap(GeoPoint p) {
@@ -156,6 +168,7 @@ public class GuessActivity extends AppCompatActivity {
                 String dist = String.valueOf(distance(location.getLatitude(),location.getLongitude()
                         ,p.getLatitude(),p.getLongitude()));
                 Toast.makeText(this,"Distancia hacia allá: "+dist,Toast.LENGTH_LONG).show();
+                //Ruta
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -201,8 +214,11 @@ public class GuessActivity extends AppCompatActivity {
         super.onResume();
         map.onResume();
         startLocationUpdates();
+        initializeMarker();
         IMapController controller = map.getController();
         controller.setZoom(18.0);
+        if(location!=null)
+            Log.d("LOCATION",location.toString());
         controller.setCenter(this.location);
     }
 
