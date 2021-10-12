@@ -1,5 +1,6 @@
 package main.Pantallas;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -14,8 +15,8 @@ import android.widget.ImageView;
 public class PrincipalActivity extends AppCompatActivity {
 
     String galleryPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
-    public static final int GALLERY_ID = 5001;
-    public static final int IMAGE_PICK_CODE = 9;
+    public static final int GALLERY_ID_PERMISSION = 5001;
+    public static final int IMAGE_PICK_ACTIVITY = 9;
 
     ImageButton botonCrearPostCamara;
     ImageButton botonCrearPostGaleria;
@@ -51,7 +52,7 @@ public class PrincipalActivity extends AppCompatActivity {
         if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_DENIED){
             String[] permissions = {galleryPermission};
-            requestPermissions(permissions, GALLERY_ID);
+            requestPermissions(permissions, GALLERY_ID_PERMISSION);
 
         }
         else{
@@ -74,7 +75,7 @@ public class PrincipalActivity extends AppCompatActivity {
     private void pickImageFromGallery(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_CODE);
+        startActivityForResult(intent, IMAGE_PICK_ACTIVITY);
     }
 
     @Override
@@ -82,11 +83,20 @@ public class PrincipalActivity extends AppCompatActivity {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(requestCode == GALLERY_ID ){
+        if(requestCode == GALLERY_ID_PERMISSION ){
             if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED){
                 pickImageFromGallery();
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK && requestCode == IMAGE_PICK_ACTIVITY){
+            historiaUsuario.setImageURI(data.getData());
         }
     }
 
