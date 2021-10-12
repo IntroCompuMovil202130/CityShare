@@ -13,6 +13,7 @@
     <string name="chat">Chat</string>
     <string name="register"><b><u>Regístrate aquí</u></b></string>
     <string name="newUser">¿Eres nuevo?</string>
+    <string name="contraseñaOlvidada">¿Olvidó su contraseña?</string>
     <string name="user">Usuario</string>
     <string name="send">Enviar</string>
     <string name="retos">Retar</string>
@@ -31,5 +32,6 @@
     <string name="close">Cerrar</string>
     <string name="adivin"><b>Adivina!</b></string>
     <string name="score">Score</string>
+    <string name="loginBienvenido">¡Bienvenido de nuevo!</string>
 
 </resources>

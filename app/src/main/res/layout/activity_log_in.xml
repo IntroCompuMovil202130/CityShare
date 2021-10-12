@@ -6,68 +6,84 @@
     android:layout_height="match_parent"
     tools:context=".LogInActivity">
 
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:text="@string/app_name"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="@string/loginBienvenido"
+        android:textColor="@color/blueCity"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textAllCaps="true"
-        android:textSize="25sp"/>
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="@string/IngresoDatos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:textSize="20sp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/correoLogIn"
-        android:layout_width="250dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/custom_edit_text"
         android:ems="10"
+        android:fontFamily="@font/montserrat_light"
         android:hint="@string/Correo"
+        android:textColorHint="#9D9D9D"
         android:inputType="textPersonName"
+        android:textSize="17sp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView1"
-        android:textSize="20sp"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/pswLogIn"
-        android:layout_width="250dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/custom_edit_text"
         android:ems="10"
+        android:fontFamily="@font/montserrat_light"
         android:hint="@string/PSW"
         android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColorHint="#9D9D9D"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/correoLogIn"
-        android:textSize="20sp"/>
+        android:drawableRight="@drawable/ojoabierto"/>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/contraseñaOlvidada"
+        android:textColor="#5597FB"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.812"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pswLogIn" />
 
     <Button
         android:id="@+id/boton"
-        android:layout_width="300dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="92dp"
         android:background="@drawable/custom_button"
         android:fontFamily="@font/montserrat"
         android:onClick="signInPressed"
         android:text="@string/login"
+        android:textAllCaps="false"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pswLogIn" />
 
@@ -75,11 +91,12 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserrat"
         android:text="@string/newUser"
         android:textColor="#5597FB"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/boton" />
 
@@ -87,14 +104,15 @@
         android:id="@+id/regist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="80dp"
         android:clickable="true"
         android:focusable="true"
+        android:fontFamily="@font/montserrat_medium"
         android:onClick="launchSignUpActivity"
         android:text="@string/register"
         android:textColor="#5597FB"
-        android:textSize="20sp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintTop_toBottomOf="@+id/boton" />
