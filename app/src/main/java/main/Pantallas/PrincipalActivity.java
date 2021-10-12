@@ -7,6 +7,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,8 +16,11 @@ import android.widget.ImageView;
 public class PrincipalActivity extends AppCompatActivity {
 
     String galleryPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
+    String cameraPermission = Manifest.permission.CAMERA;
     public static final int GALLERY_ID_PERMISSION = 5001;
+    public static final int CAMERA_ID_PERMISSION = 5002;
     public static final int IMAGE_PICK_ACTIVITY = 9;
+    public static final int TAKE_PICTURE_ACTIVITY = 9;
 
     ImageButton botonCrearPostCamara;
     ImageButton botonCrearPostGaleria;
@@ -45,7 +49,15 @@ public class PrincipalActivity extends AppCompatActivity {
 //    }
 
     public void createStoryCam(View v){
+        if(checkSelfPermission(Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_DENIED){
+            String[] permissions = {cameraPermission};
+            requestPermissions(permissions, CAMERA_ID_PERMISSION);
 
+        }
+        else{
+            takePicture();
+        }
     }
 
     public void createStoryGal(View v){
@@ -78,6 +90,16 @@ public class PrincipalActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_PICK_ACTIVITY);
     }
 
+    private void takePicture(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try{
+            startActivityForResult(intent, TAKE_PICTURE_ACTIVITY);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
@@ -87,6 +109,12 @@ public class PrincipalActivity extends AppCompatActivity {
             if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED){
                 pickImageFromGallery();
+            }
+        }
+        else if(requestCode == CAMERA_ID_PERMISSION ){
+            if(checkSelfPermission(Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_GRANTED){
+                takePicture();
             }
         }
     }
