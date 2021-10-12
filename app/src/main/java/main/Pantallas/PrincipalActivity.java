@@ -26,24 +26,26 @@ public class PrincipalActivity extends AppCompatActivity {
         imagenEjemplo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),GuessActivity.class));
+                startActivity(new Intent(getApplicationContext(),preguessActivity.class));
             }
         });
     }
 
     public void launchPostsActivity(View v){
-        startActivity(new Intent(this, PostsActivity.class));
+        startActivity(new Intent(this, PostsActivity.class));  //cambiar para que venga desde la actitividad de Menchu con botón de "adivinar"
     }
+
     public void launchStoryActivity(View v){
         startActivity(new Intent(this,StoryActivity.class));
     }
+
     public void launchChatActivity(View v){
-        startActivity(new Intent(this,ChatActivity.class));
+        startActivity(new Intent(this,ChallengesActivity.class));
     }
     private void inflate() {
         botonCrearPost = findViewById(R.id.botonPost);
         botonHistorias = findViewById(R.id.botonHistorias);
         chat = findViewById(R.id.botonChat);
-        imagenEjemplo = findViewById(R.id.imagenEjemplo);
+        imagenEjemplo = findViewById(R.id.imageView6);
     }
 }

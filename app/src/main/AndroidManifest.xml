@@ -14,6 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CityShare">
         <activity
+            android:name=".preguessActivity"
+            android:exported="true" />
+        <activity android:name=".ChallengesActivity" />
+        <activity android:name=".ScoreActivity" />
+        <activity
             android:name=".ChatActivity"
             android:exported="true" />
         <activity
