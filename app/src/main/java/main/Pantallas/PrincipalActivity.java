@@ -1,13 +1,19 @@
 package main.Pantallas;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class PrincipalActivity extends AppCompatActivity {
 
@@ -15,12 +21,12 @@ public class PrincipalActivity extends AppCompatActivity {
     Button botonHistorias;
     Button chat;
     ImageView imagenEjemplo;
-
+    ImageButton signOut;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
-
         inflate();
 
         imagenEjemplo.setOnClickListener(new View.OnClickListener() {
@@ -29,7 +35,17 @@ public class PrincipalActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),preguessActivity.class));
             }
         });
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent i= new Intent(getApplicationContext(),MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        });
     }
+
 
     public void launchPostsActivity(View v){
         startActivity(new Intent(this, PostsActivity.class));  //cambiar para que venga desde la actitividad de Menchu con botón de "adivinar"
@@ -47,5 +63,7 @@ public class PrincipalActivity extends AppCompatActivity {
         botonHistorias = findViewById(R.id.botonHistorias);
         chat = findViewById(R.id.botonChat);
         imagenEjemplo = findViewById(R.id.imageView6);
+        mAuth= FirebaseAuth.getInstance();
+        signOut=findViewById((R.id.signout));
     }
 }

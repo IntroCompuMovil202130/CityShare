@@ -16,16 +16,12 @@
         <entry key="..\:/ProyectosAndroid/CityShare/app/src/main/res/layout/activity_story.xml" value="0.2028985507246377" />
         <entry key="..\:/ProyectosAndroid/CityShare/app/src/main/res/layout/pantallaLogIn.xml" value="0.20244565217391305" />
         <entry key="..\:/ProyectosAndroid/CityShare/app/src/main/res/layout/pantallalogin.xml" value="0.25" />
-        <entry key="..\:/Users/pjuli/StudioProjects/CityShare/app/src/main/res/drawable/checkbox_selector.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/pjuli/StudioProjects/CityShare/app/src/main/res/drawable/custom_button.xml" value="0.14074074074074075" />
-        <entry key="..\:/Users/pjuli/StudioProjects/CityShare/app/src/main/res/drawable/custom_button_main.xml" value="0.17552083333333332" />
-        <entry key="..\:/Users/pjuli/StudioProjects/CityShare/app/src/main/res/drawable/custom_edit_text.xml" value="0.17552083333333332" />
-        <entry key="..\:/Users/pjuli/StudioProjects/CityShare/app/src/main/res/drawable/ic_checked.xml" value="0.17552083333333332" />
-        <entry key="..\:/Users/pjuli/StudioProjects/CityShare/app/src/main/res/drawable/ic_unchecked.xml" value="0.1" />
-        <entry key="..\:/Users/pjuli/StudioProjects/CityShare/app/src/main/res/layout/activity_log_in.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/pjuli/StudioProjects/CityShare/app/src/main/res/layout/activity_main.xml" value="0.159375" />
-        <entry key="..\:/Users/pjuli/StudioProjects/CityShare/app/src/main/res/layout/activity_principal.xml" value="0.18" />
-        <entry key="..\:/Users/pjuli/StudioProjects/CityShare/app/src/main/res/layout/activity_sign_up.xml" value="0.18" />
+        <entry key="..\:/Users/david/OneDrive/Documentos/GitHub/CityShare/app/src/main/res/layout/activity_log_in.xml" value="0.15806159420289856" />
+        <entry key="..\:/Users/david/OneDrive/Documentos/GitHub/CityShare/app/src/main/res/layout/activity_main.xml" value="0.15806159420289856" />
+        <entry key="..\:/Users/david/OneDrive/Documentos/GitHub/CityShare/app/src/main/res/layout/activity_posts.xml" value="0.15806159420289856" />
+        <entry key="..\:/Users/david/OneDrive/Documentos/GitHub/CityShare/app/src/main/res/layout/activity_principal.xml" value="0.4" />
+        <entry key="..\:/Users/david/OneDrive/Documentos/GitHub/CityShare/app/src/main/res/layout/activity_score.xml" value="0.15806159420289856" />
+        <entry key="..\:/Users/david/OneDrive/Documentos/GitHub/CityShare/app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
       </map>
     </option>
   </component>
