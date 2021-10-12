@@ -9,15 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
-
-    String galleryPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
-    public static final int GALLERY_ID = 2;
-    public static final int IMAGE_PICK_CODE = 50001;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,21 +28,5 @@ public class MainActivity extends AppCompatActivity {
     }
     public void launchLogInActivity(View v){
         startActivity(new Intent(getApplicationContext(), LogInActivity.class));
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if(requestCode == GALLERY_ID){
-            pickImageFromGallery();
-        }
-    }
-
-    private void pickImageFromGallery(){
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_PICK_CODE);
     }
 }
