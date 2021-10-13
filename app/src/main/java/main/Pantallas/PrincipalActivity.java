@@ -22,6 +22,7 @@ public class PrincipalActivity extends AppCompatActivity {
     public static final int CAMERA_ID_PERMISSION = 5002;
     public static final int IMAGE_PICK_ACTIVITY = 9;
     public static final int TAKE_PICTURE_ACTIVITY = 10;
+    private boolean storyTaken = false;
 
     ImageButton botonCrearPostCamara;
     ImageButton botonCrearPostGaleria;
@@ -74,7 +75,19 @@ public class PrincipalActivity extends AppCompatActivity {
     }
 
     public void userStorySee(View v){
+        if(storyTaken){
 
+        }else{
+            if(checkSelfPermission(Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_DENIED){
+                String[] permissions = {cameraPermission};
+                requestPermissions(permissions, CAMERA_ID_PERMISSION);
+
+            }
+            else{
+                takePicture();
+            }
+        }
     }
 
     public void launchStoryActivity(View v){
@@ -128,12 +141,14 @@ public class PrincipalActivity extends AppCompatActivity {
         System.out.println("Req code " + requestCode);
         if(resultCode == RESULT_OK && requestCode == IMAGE_PICK_ACTIVITY){
             historiaUsuario.setImageURI(data.getData());
+            storyTaken = true;
         }
 
         else if(resultCode == RESULT_OK && requestCode == TAKE_PICTURE_ACTIVITY){
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             historiaUsuario.setImageBitmap(imageBitmap);
+            storyTaken = true;
         }
     }
 
