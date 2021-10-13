@@ -42,11 +42,9 @@ public class PostsActivity extends AppCompatActivity  implements SensorEventList
     }
 
     public void onSensorChanged(SensorEvent event) {
-        text.setText("");
-        float fahrenheit = event.values[0] * 9 / 5 + 32;
-        msg.insert(0, event.values[0] + " Celsius");
+        text.setText(" ");
+        msg.insert(0, event.values[0] + " °C");
         text.setText(msg);
-        System.out.println(msg);
         text.invalidate();
     }
 }
