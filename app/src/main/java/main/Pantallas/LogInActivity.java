@@ -72,7 +72,7 @@ public class LogInActivity extends AppCompatActivity {
             passwordS="null";
         }
 
-        if(validateForm(emailS,passwordS)){
+         if(validateForm(emailS,passwordS)){
             mAuth.signInWithEmailAndPassword(emailS,passwordS).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -80,9 +80,11 @@ public class LogInActivity extends AppCompatActivity {
                         Log.i(TAG, "Autenticación correcta");
                         updateUI(mAuth.getCurrentUser());
                     }
-                    Toast.makeText(getApplicationContext(),TAG+" Autenticacion fallida: "+task.getException().toString(),Toast.LENGTH_LONG).show();
-                    correo.setText("");
-                    password.setText("");
+                    else {
+                        Toast.makeText(getApplicationContext(), TAG + " Autenticacion fallida: " + task.getException().toString(), Toast.LENGTH_LONG).show();
+                        correo.setText("");
+                        password.setText("");
+                    }
                 }
             });
         }
