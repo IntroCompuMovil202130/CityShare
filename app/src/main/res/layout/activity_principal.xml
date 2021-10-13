@@ -63,18 +63,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/camera" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="18dp"
-        android:background="@null"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/avatar_principal" />
-
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
@@ -91,8 +79,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.209" />
 
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="18dp"
+        android:background="@null"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/avatar_principal" />
+
+
     <TextView
-        android:id="@+id/regist"
+        android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
@@ -186,6 +188,5 @@
         app:layout_constraintStart_toEndOf="@+id/botonPost"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/signout" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
