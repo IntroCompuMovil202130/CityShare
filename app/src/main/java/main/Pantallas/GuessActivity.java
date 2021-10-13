@@ -46,6 +46,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.TilesOverlay;
 
 import java.io.IOException;
@@ -68,6 +69,7 @@ public class GuessActivity extends AppCompatActivity {
     SensorManager manager;
     Sensor lightSensor;
     SensorEventListener lightSensorListener;
+    GeoPoint rome = new GeoPoint(41.889467,12.492081);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,10 +167,6 @@ public class GuessActivity extends AppCompatActivity {
                 locationName = result.getAddressLine(0);
                 longPressedMarker = createMarker(p, locationName, null);
                 map.getOverlays().add(longPressedMarker);
-                String dist = String.valueOf(distance(location.getLatitude(),location.getLongitude()
-                        ,p.getLatitude(),p.getLongitude()));
-                Toast.makeText(this,"Distancia hacia allá: "+dist,Toast.LENGTH_LONG).show();
-                //Ruta
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -190,6 +188,18 @@ public class GuessActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+    public void guess(View v){
+        Polyline line = new Polyline(map);
+        line.addPoint(rome);
+        GeoPoint p = longPressedMarker.getPosition();
+        line.addPoint(p);
+        map.getOverlays().add(line);
+        Marker romeMarker = createMarker(rome,"Ubicación real",null);
+        map.getOverlays().add(romeMarker);
+        String dist = String.valueOf(distance(rome.getLatitude(),rome.getLongitude()
+                ,p.getLatitude(),p.getLongitude()));
+        Toast.makeText(this,"Distancia hacia allá: "+dist,Toast.LENGTH_LONG).show();
     }
 
     private Marker createMarker(GeoPoint p, String title, String desc){
