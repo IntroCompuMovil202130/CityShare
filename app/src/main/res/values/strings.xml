@@ -32,5 +32,6 @@
     <string name="close">Cerrar</string>
     <string name="adivin"><b>Adivina!</b></string>
     <string name="score">Score</string>
+    <string name="yourStory">Tu historia</string>
     <string name="loginBienvenido">¡Bienvenido de nuevo!</string>
 </resources>
