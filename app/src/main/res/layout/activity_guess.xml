@@ -34,7 +34,19 @@
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="12"/>
+        android:layout_weight="12"
+        >
+    </org.osmdroid.views.MapView>
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@null"
+        android:layout_gravity="end|bottom"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/orientation"
+        android:onClick="centerCamera"/>
 
     <Button
         android:id="@+id/button"
