@@ -76,7 +76,7 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void userStorySee(View v){
         if(storyTaken){
-
+            startActivity(new Intent(this, UserStoryActivity.class));
         }else{
             if(checkSelfPermission(Manifest.permission.CAMERA)
                     == PackageManager.PERMISSION_DENIED){
