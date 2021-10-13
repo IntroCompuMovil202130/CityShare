@@ -1,6 +1,7 @@
 package main.Pantallas;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -8,13 +9,22 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import android.provider.MediaStore;
+
+import android.view.Menu;
+import android.view.MenuItem;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+
 import java.io.ByteArrayOutputStream;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class PrincipalActivity extends AppCompatActivity {
 
@@ -32,18 +42,27 @@ public class PrincipalActivity extends AppCompatActivity {
     Button botonHistorias;
     Button chat;
     ImageView imagenEjemplo;
-
+    ImageButton signOut;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
-
         inflate();
 
         imagenEjemplo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),preguessActivity.class));
+            }
+        });
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent i= new Intent(getApplicationContext(),MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
         });
     }
@@ -76,10 +95,10 @@ public class PrincipalActivity extends AppCompatActivity {
         }
     }
 
-    public void userStorySee(View v){
-        if(storyTaken){
+    public void userStorySee(View v) {
+        if (storyTaken) {
             historiaUsuario.setDrawingCacheEnabled(true);
-            Bitmap b=historiaUsuario.getDrawingCache();
+            Bitmap b = historiaUsuario.getDrawingCache();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             b.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
@@ -87,17 +106,20 @@ public class PrincipalActivity extends AppCompatActivity {
 
             intent.putExtra("picture", byteArray);
             startActivity(intent);
-        }else{
-            if(checkSelfPermission(Manifest.permission.CAMERA)
-                    == PackageManager.PERMISSION_DENIED){
+        } else {
+            if (checkSelfPermission(Manifest.permission.CAMERA)
+                    == PackageManager.PERMISSION_DENIED) {
                 String[] permissions = {cameraPermission};
                 requestPermissions(permissions, CAMERA_ID_PERMISSION);
 
-            }
-            else{
+            } else {
                 takePicture();
             }
         }
+    }
+
+    public void launchPostsActivity(View v){
+        startActivity(new Intent(this, PostsActivity.class));  //cambiar para que venga desde la actitividad de Menchu con botón de "adivinar"
     }
 
     public void launchStoryActivity(View v){
@@ -169,5 +191,7 @@ public class PrincipalActivity extends AppCompatActivity {
         botonHistorias = findViewById(R.id.botonHistorias);
         chat = findViewById(R.id.botonChat);
         imagenEjemplo = findViewById(R.id.imageView6);
+        mAuth= FirebaseAuth.getInstance();
+        signOut=findViewById((R.id.signout));
     }
 }

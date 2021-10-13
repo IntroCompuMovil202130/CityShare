@@ -31,7 +31,8 @@
             android:exported="true" />
         <activity
             android:name=".GuessActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:hardwareAccelerated="false"/>
         <activity
             android:name=".StoryActivity"
             android:exported="true" />
