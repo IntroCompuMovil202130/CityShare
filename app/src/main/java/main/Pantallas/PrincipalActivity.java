@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import java.io.ByteArrayOutputStream;
+
 public class PrincipalActivity extends AppCompatActivity {
 
     String galleryPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -76,7 +78,15 @@ public class PrincipalActivity extends AppCompatActivity {
 
     public void userStorySee(View v){
         if(storyTaken){
-            startActivity(new Intent(this, UserStoryActivity.class));
+            historiaUsuario.setDrawingCacheEnabled(true);
+            Bitmap b=historiaUsuario.getDrawingCache();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            b.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            Intent intent = new Intent(new Intent(this, UserStoryActivity.class));
+
+            intent.putExtra("picture", byteArray);
+            startActivity(intent);
         }else{
             if(checkSelfPermission(Manifest.permission.CAMERA)
                     == PackageManager.PERMISSION_DENIED){
