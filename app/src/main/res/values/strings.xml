@@ -34,4 +34,6 @@
     <string name="score">Score</string>
     <string name="yourStory">Tu historia</string>
     <string name="loginBienvenido">¡Bienvenido de nuevo!</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="volver">Volver</string>
 </resources>

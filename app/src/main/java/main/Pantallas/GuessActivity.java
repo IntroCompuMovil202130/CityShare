@@ -8,8 +8,9 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -20,13 +21,17 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.service.quickaccesswallet.GetWalletCardsCallback;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -35,46 +40,57 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.android.PolyUtil;
 
-import org.osmdroid.api.IMapController;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.osmdroid.config.Configuration;
-import org.osmdroid.events.MapEventsReceiver;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.MapEventsOverlay;
-import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.Polyline;
-import org.osmdroid.views.overlay.TilesOverlay;
 
 import java.io.IOException;
 import java.util.List;
 
-public class GuessActivity extends AppCompatActivity {
+public class GuessActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     TextView tvNombre;
     private static final double RADIUS_OF_EARTH_KM = 6371;
-    MapView map;
-    private FusedLocationProviderClient locationProviderClient;
-    private LocationRequest locationRequest;
-    private LocationCallback locationCallback;
     static final int LOCATION_REQ = 0;
-    GeoPoint location;
-    Marker locationMarker;
-    Marker longPressedMarker;
-    Task<LocationSettingsResponse> task;
-    Geocoder geocoder;
     SensorManager manager;
     Sensor lightSensor;
     SensorEventListener lightSensorListener;
-    GeoPoint rome = new GeoPoint(41.889467,12.492081);
+    LatLng rome = new LatLng(41.889467,12.492081);
+    private GoogleMap mMap;
+    static final String permLocation = Manifest.permission.ACCESS_FINE_LOCATION;
+    LatLng location;
+    Task<LocationSettingsResponse> task;
+    Marker position;
+    Marker guess;
+    private FusedLocationProviderClient locationProviderClient;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
+    private Geocoder geocoder;
+    TextView tvGuess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guess);
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, "location", LOCATION_REQ);
 
@@ -96,14 +112,11 @@ public class GuessActivity extends AppCompatActivity {
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 if(location != null) {
                     Location l = locationResult.getLastLocation();
-                    location.setLongitude(l.getLongitude());
-                    location.setLatitude(l.getLatitude());
-                    location.setAltitude(l.getAltitude());
-                    if (locationMarker != null)
-                        map.getOverlays().remove(locationMarker);
-                    locationMarker = createMarker(location, "Estas aqui", null);
-                    map.getOverlays().add(locationMarker);
-                    map.invalidate();
+                    location = new LatLng(l.getLatitude(),l.getLongitude());
+                    if (position != null) {
+                        position.remove();
+                    }
+                    position = mMap.addMarker(new MarkerOptions().position(location).title("Estas aqui"));
                 }
             }
         };
@@ -113,11 +126,11 @@ public class GuessActivity extends AppCompatActivity {
                 Log.d("SENSOR","Entre: "+sensorEvent.values[0]);
                 if(sensorEvent.values[0] < 5000) {
                     Log.d("SENSOR", "Estoy con menos de 5000");
-                    map.getOverlayManager().getTilesOverlay().setColorFilter(TilesOverlay.INVERT_COLORS);
+                    mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getApplicationContext(),R.raw.night_style));
                 }
                 else{
                     Log.d("SENSOR","Estoy con mas o igual de 5000");
-                    //map.getOverlayManager().getTilesOverlay().setColorFilter(TilesOverlay.INVERT_COLORS);
+                    mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getApplicationContext(),R.raw.day_style));
                 }
             }
             @Override
@@ -125,91 +138,91 @@ public class GuessActivity extends AppCompatActivity {
             }
         };
         manager.registerListener(lightSensorListener,lightSensor,SensorManager.SENSOR_DELAY_FASTEST);
-        map.getOverlays().add(createOverlayEvents());
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == LOCATION_REQ) {
-            if (grantResults.length > 0 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                initializeMarker();
-            } else {
-                Toast.makeText(getApplicationContext(), "Necesitamos ubicacion", Toast.LENGTH_LONG).show();
-            }
-        }
-
-    }
-    private MapEventsOverlay createOverlayEvents() {
-        return new MapEventsOverlay(new MapEventsReceiver() {
-            @Override
-            public boolean singleTapConfirmedHelper(GeoPoint p) {
-                return false;
-            }
-
-            @Override
-            public boolean longPressHelper(GeoPoint p) {
-                longPressOnMap(p);
-                return true;
-            }
-        });
-    }
-
-    private void longPressOnMap(GeoPoint p) {
-        if(longPressedMarker!=null)
-            map.getOverlays().remove(longPressedMarker);
-        String locationName;
-        try {
-            List<Address> list = geocoder.getFromLocation(p.getLatitude(),p.getLongitude(),2);
-            if(!list.isEmpty()) {
-                Address result = list.get(0);
-                locationName = result.getAddressLine(0);
-                longPressedMarker = createMarker(p, locationName, null);
-                map.getOverlays().add(longPressedMarker);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(requestCode == LOCATION_REQ) {
+            initializeMarker();
         }
     }
 
     private void initializeMarker() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ActivityCompat.checkSelfPermission(this, permLocation)
                 == PackageManager.PERMISSION_GRANTED) {
             locationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location loc) {
                     if (loc != null) {
-                        location = new GeoPoint(loc.getLatitude(), loc.getLongitude());
-                        locationMarker = createMarker(location,"Estas aquí","");
-                        map.getOverlays().add(locationMarker);
-                        map.getController().setCenter(location);
+                        location = new LatLng(loc.getLatitude(), loc.getLongitude());
+                        position = mMap.addMarker(new MarkerOptions().position(location).title("Estas aqui"));
+                        mMap.getUiSettings().setZoomGesturesEnabled(true);
+                        mMap.moveCamera(CameraUpdateFactory.zoomTo(13));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
                     }
                 }
             });
         }
     }
+
     public void guess(View v){
-        Polyline line = new Polyline(map);
-        line.addPoint(rome);
-        GeoPoint p = longPressedMarker.getPosition();
-        line.addPoint(p);
-        map.getOverlays().add(line);
-        Marker romeMarker = createMarker(rome,"Ubicación real",null);
-        map.getOverlays().add(romeMarker);
-        String dist = String.valueOf(distance(rome.getLatitude(),rome.getLongitude()
-                ,p.getLatitude(),p.getLongitude()));
-        Toast.makeText(this,"Distancia hacia allá: "+dist,Toast.LENGTH_LONG).show();
+        if(guess == null) {
+            Toast.makeText(this, "Eliga una ubicación para adivinar", Toast.LENGTH_LONG).show();
+            return;
+        }
+        mMap.addMarker(new MarkerOptions().position(rome).title("Ubicación real"));
+        String dist = String.valueOf(distance(rome.latitude,rome.longitude,guess.getPosition().latitude,guess.getPosition().longitude));
+        String url = getUrl(guess.getPosition(),rome);
+        Log.d("API TEST", url);
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject json = new JSONObject(response);
+                    trazarRuta(json);
+                    String t = "Estuviste a " + dist + " de la ubicación real";
+                    tvGuess.setText(t);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) { }
+        });
+        queue.add(request);
     }
 
-    private Marker createMarker(GeoPoint p, String title, String desc){
-        Marker marker = new Marker(map);
-        marker.setPosition(p);
-        marker.setIcon(ContextCompat.getDrawable(GuessActivity.this, R.drawable.location_black));
-        marker.setImage(ContextCompat.getDrawable(GuessActivity.this, R.drawable.location_black));
-        marker.setTitle(title);
-        marker.setSubDescription(desc);
-        return marker;
+    private void trazarRuta(JSONObject ruta){
+        JSONArray jroutes;
+        JSONArray jlegs;
+        JSONArray jsteps;
+
+        try {
+            jroutes = ruta.getJSONArray("routes");
+            for(int i = 0; i < jroutes.length();i++){
+                jlegs = ((JSONObject)(jroutes.get(i))).getJSONArray("legs");
+                for(int j = 0; j < jlegs.length();j++){
+                    jsteps = ((JSONObject)(jlegs.get(j))).getJSONArray("steps");
+                    for(int k = 0; k < jsteps.length();k++){
+                        String polyline = "" + ((JSONObject)((JSONObject)jsteps.get(k)).get("polyline")).get("points");
+                        List<LatLng> lista = PolyUtil.decode(polyline);
+                        mMap.addPolyline(new PolylineOptions().addAll(lista).color(Color.CYAN).width(6));
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getUrl(LatLng p, LatLng rome) {
+        String origin = "origin=" + p.latitude+"," + p.longitude;
+        String destination = "destination=" + rome.latitude + "," + rome.longitude;
+        String key = "key=" + getString(R.string.google_maps_key);
+        return "https://maps.googleapis.com/maps/api/directions/json?"+destination+"&"+origin+"&"+key;
     }
 
     private void checkGPS() {
@@ -222,24 +235,37 @@ public class GuessActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        map.onResume();
         startLocationUpdates();
-        initializeMarker();
-        IMapController controller = map.getController();
-        controller.setZoom(18.0);
-        if(location!=null)
-            Log.d("LOCATION",location.toString());
-        controller.setCenter(this.location);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        map.onPause();
         stopLocationUpdates();
-        manager.unregisterListener(lightSensorListener,lightSensor);
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.getUiSettings().setZoomGesturesEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        initializeMarker();
+        startLocationUpdates();
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(@NonNull LatLng latLng) {
+                List<Address> addresses;
+                try {
+                    if(guess != null)
+                        guess.remove();
+                    addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                    guess = mMap.addMarker(new MarkerOptions().position(latLng).title(addresses.get(0).getAddressLine(0)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     private void stopLocationUpdates() {
         locationProviderClient.removeLocationUpdates(locationCallback);
     }
@@ -265,11 +291,10 @@ public class GuessActivity extends AppCompatActivity {
     }
 
     private void inflate() {
+        tvNombre = findViewById(R.id.textViewNombre);
+        tvGuess = findViewById(R.id.tvGuess);
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-        map = findViewById(R.id.mapView);
-        map.setTileSource(TileSourceFactory.MAPNIK);
-        map.setMultiTouchControls(true);
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationRequest = createLocationRequest();
         manager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -284,7 +309,7 @@ public class GuessActivity extends AppCompatActivity {
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
     public void centerCamera(View v){
-        map.getController().setCenter(location);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
     }
 
     public double distance(double lat1, double long1, double lat2, double long2) {
@@ -296,5 +321,8 @@ public class GuessActivity extends AppCompatActivity {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double result = RADIUS_OF_EARTH_KM * c;
         return Math.round(result*100.0)/100.0;
+    }
+    public void goBack(View v){
+        startActivity(new Intent(this,preguessActivity.class));
     }
 }
