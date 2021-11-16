@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import android.provider.MediaStore;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,11 +20,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import java.io.ByteArrayOutputStream;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import main.Model.Usuario;
 
 
 public class PrincipalActivity extends AppCompatActivity {
@@ -43,12 +53,17 @@ public class PrincipalActivity extends AppCompatActivity {
     Button chat;
     ImageView imagenEjemplo;
     ImageButton signOut;
+    TextView userName;
     private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference ref;
+    private FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         inflate();
+        updateUI();
 
         imagenEjemplo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +78,24 @@ public class PrincipalActivity extends AppCompatActivity {
                 Intent i= new Intent(getApplicationContext(),MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
+            }
+        });
+    }
+
+    private void updateUI() {
+        ref.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    Usuario myUser= snapshot.getValue(Usuario.class);
+                    Log.i("TAG", "Encontró usuario: " + myUser.getName());
+                    String name = myUser.getName();
+                    userName.setText("Hola " + name);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("DB","Error de consulta");
             }
         });
     }
@@ -189,9 +222,13 @@ public class PrincipalActivity extends AppCompatActivity {
         botonCrearPostGaleria = findViewById(R.id.botonPost2);
         historiaUsuario = findViewById(R.id.imageView5);
         botonHistorias = findViewById(R.id.botonHistorias);
+        userName = findViewById(R.id.tvUserName);
         chat = findViewById(R.id.botonChat);
         imagenEjemplo = findViewById(R.id.imageView6);
         mAuth= FirebaseAuth.getInstance();
         signOut=findViewById((R.id.signout));
+        database = FirebaseDatabase.getInstance();
+        ref = database.getReference();
+        user = mAuth.getCurrentUser();
     }
 }
