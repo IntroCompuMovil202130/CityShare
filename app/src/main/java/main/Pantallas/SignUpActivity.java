@@ -19,10 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpActivity extends AppCompatActivity {
-
-    EditText nombre;
     EditText correo;
-    EditText usuario;
     EditText password1;
     EditText password2;
     public static final String TAG=" Cityshare";
@@ -74,9 +71,6 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    public void launchLogIn(View v){
-        startActivity(new Intent(this, LogInActivity.class));
-    }
     public void registerUser(String email, String password){
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -87,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
                     FirebaseUser user = mAuth.getCurrentUser();
                     if(user!=null){
                         //Success
-                        Intent i = new Intent(getApplicationContext(),LogInActivity.class);
+                        Intent i = new Intent(getApplicationContext(), main.Pantallas.ExtraData.class);
                         startActivity(i);
                         Toast.makeText(getApplicationContext(),TAG+" Registro completado! ",Toast.LENGTH_LONG).show();
                     }
@@ -99,12 +93,10 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
     private void inflate() {
-        nombre = findViewById(R.id.editTextNombre);
         correo = findViewById(R.id.editTextCorreo);
-        usuario = findViewById(R.id.editTextUserName);
         password1 = findViewById(R.id.editTextPassword1);
         password2 = findViewById(R.id.editTextPassword2);
-        register=findViewById(R.id.register_button);
+        register=findViewById(R.id.boton_registro);
         mAuth= FirebaseAuth.getInstance();
     }
 }

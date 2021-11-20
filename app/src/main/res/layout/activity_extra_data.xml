@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity"
-    android:paddingVertical="20dp"
-    android:paddingHorizontal="40dp">
+    tools:context=".ExtraData">
 
     <TextView
         android:id="@+id/textView3"
@@ -14,85 +12,52 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
+        android:text="@string/YCT"
         android:textColor="@color/blueCity"
         android:textSize="30sp"
-        android:text="@string/crearcuenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <EditText
-        android:id="@+id/editTextCorreo"
+        android:id="@+id/editTextNombre"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/custom_edit_text"
         android:ems="10"
         android:fontFamily="@font/montserrat_light"
-        android:hint="@string/Correo"
+        android:hint="@string/nombre1"
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textColorHint="#9D9D9D"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <EditText
-        android:id="@+id/editTextPassword1"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:hint="@string/password"
-        android:background="@drawable/custom_edit_text"
-        android:textColorHint="#9D9D9D"
-        android:textSize="17sp"
-        android:padding="10dp"
-        android:fontFamily="@font/montserrat_light"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextCorreo"
-        android:drawableRight="@drawable/ojoabierto"/>
-
-    <EditText
-        android:id="@+id/editTextPassword2"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:hint="@string/confirmPassword"
-        android:background="@drawable/custom_edit_text"
-        android:textColorHint="#9D9D9D"
-        android:textSize="17sp"
-        android:padding="10dp"
-        android:fontFamily="@font/montserrat_light"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword1" />
-
 
     <CheckBox
         android:id="@+id/checkbox"
         style="@style/CustomCheckbox02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
+        android:buttonTint="@color/blueCity"
         android:text="Aceptar los términos y condiciones"
         android:textColor="@color/blueCity"
         app:backgroundTint="@null"
-        android:buttonTint="@color/blueCity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword2" />
+        app:layout_constraintTop_toBottomOf="@+id/select_image_contact" />
 
     <Button
         android:id="@+id/boton_registro"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/custom_button"
         android:fontFamily="@font/montserrat"
         android:text="@string/signup"
@@ -101,6 +66,47 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword2" />
+        app:layout_constraintTop_toBottomOf="@+id/checkbox" />
+
+    <EditText
+        android:id="@+id/editTextUserName"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:ems="10"
+        android:hint="@string/user"
+        android:background="@drawable/custom_edit_text"
+        android:textColorHint="#9D9D9D"
+        android:textSize="17sp"
+        android:padding="10dp"
+        android:fontFamily="@font/montserrat_light"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNombre" />
+
+    <Button
+        android:id="@+id/select_image_contact"
+        android:layout_width="320sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/custom_button"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/SI"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagenC" />
+
+    <ImageView
+        android:id="@+id/imagenC"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_marginTop="16dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextUserName"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
