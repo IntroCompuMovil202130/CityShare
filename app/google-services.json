@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "480149110292",
+    "firebase_url": "https://cityshare-5a480-default-rtdb.firebaseio.com",
     "project_id": "cityshare-5a480",
     "storage_bucket": "cityshare-5a480.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:480149110292:android:0aeb102e17b7b3fbbc3101",
+        "mobilesdk_app_id": "1:480149110292:android:e28235d57b1464f1bc3101",
         "android_client_info": {
           "package_name": "main.cityshare"
         }
@@ -20,7 +21,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB3zPZsxcGwlSZCSjavDhb_oqJpS5_4dyU"
+          "current_key": "AIzaSyAlxZztOxlqnWAgjF2cjV4gHpPWAe8mRps"
         }
       ],
       "services": {
