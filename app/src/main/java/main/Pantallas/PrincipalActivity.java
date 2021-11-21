@@ -87,10 +87,12 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    Usuario myUser= snapshot.getValue(Usuario.class);
-                    Log.i("TAG", "Encontró usuario: " + myUser.getName());
-                    String name = myUser.getName();
-                    userName.setText("Hola " + name);
+                    if(mAuth.getUid().toString().equals(snapshot.getKey())) {
+                        Usuario myUser = snapshot.getValue(Usuario.class);
+                        Log.i("TAG", "Encontró usuario: " + myUser.getName());
+                        String name = myUser.getName();
+                        userName.setText(name);
+                    }
                 }
             }
             @Override
