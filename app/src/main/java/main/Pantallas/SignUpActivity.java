@@ -213,7 +213,7 @@ public class SignUpActivity extends AppCompatActivity {
                     = storageReference
                     .child(
                             "images/"
-                                    + us.getUid());
+                                    + us.getUid()+"/"+" contactImage");
             ref.putFile(filePath)
                     .addOnSuccessListener(
                             new OnSuccessListener<UploadTask.TaskSnapshot>() {
