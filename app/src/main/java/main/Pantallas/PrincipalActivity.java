@@ -91,7 +91,7 @@ public class PrincipalActivity extends AppCompatActivity {
                         Usuario myUser = snapshot.getValue(Usuario.class);
                         Log.i("TAG", "Encontró usuario: " + myUser.getName());
                         String name = myUser.getName();
-                        userName.setText("Hola " + name);
+                        userName.setText(name);
                     }
                 }
             }
