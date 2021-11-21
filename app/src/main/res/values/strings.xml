@@ -36,4 +36,6 @@
     <string name="loginBienvenido">¡Bienvenido de nuevo!</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="volver">Volver</string>
+    <string name="SI">Seleccionar Imagen</string>
+
 </resources>
