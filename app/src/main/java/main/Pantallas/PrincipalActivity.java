@@ -332,7 +332,7 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
                         ref.child("Users").child(user.getUid()).setValue(myUser);
                         //TODO: Lectura de sensor de temperatura
                         StoryPrincipal story = new StoryPrincipal(myUser.getUserName(),uri,
-                                "images/"+user.getUid()+"/contactImage",new Loc(currentLocation),0d);
+                                "images/"+user.getUid()+"/contactImage",new Loc(currentLocation),0d, 0, 0d);
                         ref.child("Stories").child(user.getUid()).child(myUser.getStories().toString()).setValue(story);
                     }
                 }
