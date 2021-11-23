@@ -13,7 +13,7 @@ public class StoryPrincipal implements Serializable {
     private int intentos;
     private Double promedio;
 
-    public StoryPrincipal(String nombre, String photo, String profile, Loc ubicacion, Double temperatura) {
+    public StoryPrincipal(String nombre, String photo, String profile, Loc ubicacion, Double temperatura, int intentos, Double promedio) {
         this.nombre = nombre;
         this.photo = photo;
         this.profile = profile;
