@@ -379,6 +379,7 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
 
     @Override
     public void onStoryClick(int position) {
+        Log.d("Follow up", "Aqui llamo preguess");
         Intent intent = new Intent(PrincipalActivity.this,preguessActivity.class);
         intent.putExtra("Historia",storiesList.get(position));
         startActivity(intent);

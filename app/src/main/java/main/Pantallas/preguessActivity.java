@@ -13,10 +13,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import main.DTOs.StoryPrincipal;
 
@@ -39,6 +48,9 @@ public class preguessActivity extends AppCompatActivity {
 
         updateUI();
 
+        //For hint
+        getWeatherForecastRest();
+
         estadistica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +66,31 @@ public class preguessActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    //Consumes rest service for hint pointing
+    private void getWeatherForecastRest(){
+//        String url = "https://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json";
+        String url = "https://www.boredapi.com/api/activity";
+        Log.d("API TEST", url);
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    //JSONObject json = new JSONObject(response);
+                    Log.d("Follow up", response);
+                } catch (Exception e) {
+                    Log.d("Follow up", "fuck my life");
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) { }
+        });
+        queue.add(request);
+
     }
 
     private void updateUI() {
