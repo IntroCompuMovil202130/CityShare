@@ -164,6 +164,7 @@ public class SignUpActivity extends AppCompatActivity {
         Usuario usuario = new Usuario(name,username,email);
         //write data
         ref.child("Users").child(us.getUid()).setValue(usuario);
+        ref.child("Users").child(us.getUid()).child("stories").setValue(0);
     }
     private void pickImageFromGallery(){
         Intent intent = new Intent();
@@ -210,62 +211,34 @@ public class SignUpActivity extends AppCompatActivity {
             progressDialog.show();
             // Defining the child of storageReference
             StorageReference ref
-                    = storageReference
-                    .child(
-                            "images/"
-                                    + us.getUid()+"/"+" contactImage");
-            ref.putFile(filePath)
-                    .addOnSuccessListener(
-                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
-
-                                @Override
-                                public void onSuccess(
-                                        UploadTask.TaskSnapshot taskSnapshot)
-                                {
-
-                                    // Image uploaded successfully
-                                    // Dismiss dialog
-                                    progressDialog.dismiss();
-                                    Toast
-                                            .makeText(getApplicationContext(),
-                                                    "Image Uploaded!!",
-                                                    Toast.LENGTH_SHORT)
-                                            .show();
-                                }
-                            })
-
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
-
-                            // Error, Image not uploaded
-                            progressDialog.dismiss();
-                            Toast
-                                    .makeText(getApplicationContext(),
-                                            "Failed " + e.getMessage(),
-                                            Toast.LENGTH_SHORT)
-                                    .show();
+                    = storageReference.child("images/" + us.getUid()+"/"+" contactImage");
+            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(
+                        UploadTask.TaskSnapshot taskSnapshot)
+                {
+                    // Image uploaded successfully
+                    // Dismiss dialog
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    // Error, Image not uploaded
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    })
-                    .addOnProgressListener(
-                            new OnProgressListener<UploadTask.TaskSnapshot>() {
-
-                                // Progress Listener for loading
-                                // percentage on the dialog box
-                                @Override
-                                public void onProgress(
-                                        UploadTask.TaskSnapshot taskSnapshot)
-                                {
-                                    double progress
-                                            = (100.0
-                                            * taskSnapshot.getBytesTransferred()
-                                            / taskSnapshot.getTotalByteCount());
-                                    progressDialog.setMessage(
-                                            "Uploaded "
-                                                    + (int)progress + "%");
-                                }
-                            });
+                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        // Progress Listener for loading
+                        // percentage on the dialog box
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred()
+                                    / taskSnapshot.getTotalByteCount());
+                            progressDialog.setMessage("Uploaded " + (int)progress + "%");
+                        }
+                    });
         }
     }
     private void inflate() {

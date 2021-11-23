@@ -61,6 +61,8 @@ import org.osmdroid.config.Configuration;
 import java.io.IOException;
 import java.util.List;
 
+import main.DTOs.StoryPrincipal;
+
 public class GuessActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     TextView tvNombre;
@@ -69,7 +71,7 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
     SensorManager manager;
     Sensor lightSensor;
     SensorEventListener lightSensorListener;
-    LatLng rome = new LatLng(41.889467,12.492081);
+    LatLng real;
     private GoogleMap mMap;
     static final String permLocation = Manifest.permission.ACCESS_FINE_LOCATION;
     LatLng location;
@@ -81,6 +83,8 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
     private LocationCallback locationCallback;
     private Geocoder geocoder;
     TextView tvGuess;
+
+    StoryPrincipal story;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,9 +175,9 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
             Toast.makeText(this, "Eliga una ubicación para adivinar", Toast.LENGTH_LONG).show();
             return;
         }
-        mMap.addMarker(new MarkerOptions().position(rome).title("Ubicación real"));
-        String dist = String.valueOf(distance(rome.latitude,rome.longitude,guess.getPosition().latitude,guess.getPosition().longitude));
-        String url = getUrl(guess.getPosition(),rome);
+        mMap.addMarker(new MarkerOptions().position(real).title("Ubicación real"));
+        String dist = String.valueOf(distance(real.latitude,real.longitude,guess.getPosition().latitude,guess.getPosition().longitude));
+        String url = getUrl(guess.getPosition(),real);
         Log.d("API TEST", url);
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -291,7 +295,10 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     private void inflate() {
+        story =(StoryPrincipal) getIntent().getSerializableExtra("Historia");
         tvNombre = findViewById(R.id.textViewNombre);
+        tvNombre.setText(story.getNombre());
+        real = new LatLng(story.getUbicacion().getLatitude(),story.getUbicacion().getLongitude());
         tvGuess = findViewById(R.id.tvGuess);
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
@@ -323,6 +330,6 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
         return Math.round(result*100.0)/100.0;
     }
     public void goBack(View v){
-        startActivity(new Intent(this,preguessActivity.class));
+        startActivity(new Intent(this,PrincipalActivity.class));
     }
 }
