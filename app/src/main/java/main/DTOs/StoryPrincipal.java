@@ -10,10 +10,10 @@ public class StoryPrincipal implements Serializable {
     private String profile;
     private Loc ubicacion;
     private Double temperatura;
-    private int intentos;
+    private Integer intentos;
     private Double promedio;
 
-    public StoryPrincipal(String nombre, String photo, String profile, Loc ubicacion, Double temperatura, int intentos, Double promedio) {
+    public StoryPrincipal(String nombre, String photo, String profile, Loc ubicacion, Double temperatura, Integer intentos, Double promedio) {
         this.nombre = nombre;
         this.photo = photo;
         this.profile = profile;
@@ -27,7 +27,7 @@ public class StoryPrincipal implements Serializable {
         this.intentos = this.intentos +1;
     }
 
-    public int getIntentos() {
+    public Integer getIntentos() {
         return intentos;
     }
 
