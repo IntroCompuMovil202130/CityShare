@@ -51,6 +51,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.PolyUtil;
 
 import org.json.JSONArray;
@@ -59,8 +64,10 @@ import org.json.JSONObject;
 import org.osmdroid.config.Configuration;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import main.Adapters.StoryPrincipalAdapter;
 import main.DTOs.StoryPrincipal;
 
 public class GuessActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -85,6 +92,8 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
     TextView tvGuess;
 
     StoryPrincipal story;
+
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +186,7 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
         }
         mMap.addMarker(new MarkerOptions().position(real).title("Ubicación real"));
         String dist = String.valueOf(distance(real.latitude,real.longitude,guess.getPosition().latitude,guess.getPosition().longitude));
+        updateStory(Double.parseDouble(dist));
         String url = getUrl(guess.getPosition(),real);
         Log.d("API TEST", url);
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
@@ -197,6 +207,43 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
             public void onErrorResponse(VolleyError error) { }
         });
         queue.add(request);
+    }
+
+    private void updateStory(double parseDouble) {
+        List<String> keys = new ArrayList<>();
+        ref.child("Stories").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    keys.add(snapshot.getKey());
+                }
+                update(keys, parseDouble);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    private void update(List<String> keys, Double prom) {
+        for (String key:keys) {
+            ref.child("Stories").child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot:dataSnapshot.getChildren()) {
+                        StoryPrincipal st = snapshot.getValue(StoryPrincipal.class);
+                        if(st.getUbicacion().equals(story.getUbicacion())){
+                            st.addIntentos();
+                            st.addPromedio(prom);
+                            ref.child("Stories").child(key).child(snapshot.getKey()).setValue(st);
+                            return;
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {}
+            });
+        }
     }
 
     private void trazarRuta(JSONObject ruta){
