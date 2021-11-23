@@ -70,10 +70,10 @@ public class preguessActivity extends AppCompatActivity {
 
     //Consumes rest service for hint pointing
     private void getWeatherForecastRest(){
-        Log.d("LATITUDE", story.getUbicacion().getLatitude().toString());
-        Log.d("LONGITUDE", story.getUbicacion().getLongitude().toString());
-//        String url = "https://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=json";
-        String url = "https://www.boredapi.com/api/activity";
+        String lat = story.getUbicacion().getLatitude().toString();
+        String lon = story.getUbicacion().getLongitude().toString();
+        String url = "https://www.7timer.info/bin/api.pl?lon=" + lon + "&lat=" + lat + "&product=two&output=json";
+//        String url = "https://www.boredapi.com/api/activity";
         Log.d("API TEST", url);
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
