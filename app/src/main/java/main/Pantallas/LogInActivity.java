@@ -53,6 +53,9 @@ public class LogInActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser currentUser){
         if(currentUser!=null){
             startActivity(new Intent(getApplicationContext(), PrincipalActivity.class));
+            Intent intentNotifications = new Intent(LogInActivity.this, NotificationService.class);
+            intentNotifications.putExtra("myKey" , mAuth.getUid());
+            startService(intentNotifications);
         }else{
             correo.setText("");
             password.setText("");
