@@ -129,7 +129,8 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    keys.add(snapshot.getKey());
+                    if(snapshot.getKey() != user.getUid())
+                        keys.add(snapshot.getKey());
                 }
                 getAllStories(keys);
                 Log.d("LIST","Llaves: "+keys.toString());
