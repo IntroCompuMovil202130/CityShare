@@ -88,7 +88,7 @@ public class preguessActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     String weatherType = StringUtils.substringBetween(response,"\"weather\" : " , "}");
-
+                    hintWeather.setText("Pista 2 - El clima es: " + weatherType);
                     Log.d("Follow up", weatherType);
                 } catch (Exception e) {
                     e.printStackTrace();

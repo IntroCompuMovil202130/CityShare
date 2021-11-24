@@ -85,7 +85,6 @@
         android:width="120sp"
         android:height="300sp"
         android:gravity="center"
-        android:text="TextView"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/textView7"
         app:layout_constraintEnd_toEndOf="parent"
