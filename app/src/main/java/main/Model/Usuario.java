@@ -5,6 +5,31 @@ public class Usuario {
     private String userName;
     private String email;
     private Integer stories;
+    byte[] image;
+    String code;
+
+    public Usuario(String name, String userName, String email, String code) {
+        this.name = name;
+        this.userName = userName;
+        this.email = email;
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     public Usuario(String name, String userName, String email) {
         this.name = name;
