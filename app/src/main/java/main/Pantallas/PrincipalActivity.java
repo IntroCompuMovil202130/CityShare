@@ -1,6 +1,5 @@
 package main.Pantallas;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,20 +14,16 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 
 import android.provider.MediaStore;
 
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,11 +41,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,7 +59,6 @@ import com.google.firebase.storage.UploadTask;
 import org.apache.commons.lang3.StringUtils;
 
 import main.Adapters.StoryPrincipalAdapter;
-import main.DTOs.DTOStories;
 import main.DTOs.Loc;
 import main.DTOs.StoryPrincipal;
 import main.DTOs.onStoryListener;
@@ -99,6 +90,7 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
     RecyclerView stories;
     List<StoryPrincipal> storiesList;
     StoryPrincipalAdapter adapterStory;
+    TextView recommendedActivityTextView;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -384,6 +376,7 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        recommendedActivityTextView = findViewById(R.id.textView9);
     }
 
     @Override
@@ -403,6 +396,7 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
             public void onResponse(String response) {
                 try {
                     String recommendedActivity = StringUtils.substringBetween(response,"\"activity\":" , ",");
+                    recommendedActivityTextView.setText(recommendedActivity);
                     Log.d("Follow up2", recommendedActivity);
                 } catch (Exception e) {
                     e.printStackTrace();
