@@ -1,6 +1,5 @@
 package main.Pantallas;
 
-import androidx.annotation.LongDef;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,21 +13,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 
 import android.provider.MediaStore;
 
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,12 +38,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,15 +60,16 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.apache.commons.lang3.StringUtils;
+
 import main.Adapters.StoryPrincipalAdapter;
-import main.DTOs.DTOStories;
 import main.DTOs.Loc;
 import main.DTOs.StoryPrincipal;
 import main.DTOs.onStoryListener;
 import main.Model.Usuario;
 
 
-public class PrincipalActivity extends AppCompatActivity implements onStoryListener {
+public class PrincipalActivity extends AppCompatActivity implements onStoryListener, SensorEventListener {
 
     String galleryPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
     String cameraPermission = Manifest.permission.CAMERA;
@@ -91,6 +94,7 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
     RecyclerView stories;
     List<StoryPrincipal> storiesList;
     StoryPrincipalAdapter adapterStory;
+    TextView recommendedActivityTextView;
 
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -98,12 +102,26 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
     private FirebaseUser user;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+
+    //For temperature
+    private SensorManager mgr;
+    private Sensor temp;
+    private StringBuilder msg = new StringBuilder(2048);
+    private SensorEvent event;
+    private String tempVal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
+
+        //For temp
+        mgr = (SensorManager) this.getSystemService(SENSOR_SERVICE);
+        temp = mgr.getDefaultSensor( Sensor.TYPE_AMBIENT_TEMPERATURE);
+
         inflate();
         updateName();
+        getRecommendedActivity();
 
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +139,19 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
         super.onResume();
         storiesList = new ArrayList<>();
         updateUI();
+        mgr.registerListener(this, temp, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        mgr.unregisterListener(this, temp);
+        super.onPause();
+    }
+
+    public void onSensorChanged(SensorEvent event) {
+        //msg.insert(0, event.values[0] + " °C");
+        tempVal = String.valueOf(event.values[0]);
+        Log.d("TEMP", String.valueOf(event.values[0]));
     }
 
     private void updateUI() {
@@ -333,7 +364,8 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
                         ref.child("Users").child(user.getUid()).setValue(myUser);
                         //TODO: Lectura de sensor de temperatura
                         StoryPrincipal story = new StoryPrincipal(myUser.getUserName(),uri,
-                                "images/"+user.getUid()+"/contactImage",new Loc(currentLocation),0d, 0, 0d);
+                                "images/"+user.getUid()+"/contactImage",new Loc(currentLocation),
+                                Double.valueOf(tempVal), 0, 0d);
                         ref.child("Stories").child(user.getUid()).child(myUser.getStories().toString()).setValue(story);
                     }
                 }
@@ -375,12 +407,42 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        recommendedActivityTextView = findViewById(R.id.textView9);
     }
 
     @Override
     public void onStoryClick(int position) {
+        Log.d("Follow up", "Aqui llamo preguess");
         Intent intent = new Intent(PrincipalActivity.this,preguessActivity.class);
         intent.putExtra("Historia",storiesList.get(position));
         startActivity(intent);
+    }
+
+    private void getRecommendedActivity(){
+        String url = "https://www.boredapi.com/api/activity";
+        Log.d("API TEST", url);
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    String recommendedActivity = StringUtils.substringBetween(response,"\"activity\":" , ",");
+                    recommendedActivityTextView.setText(recommendedActivity);
+                    Log.d("Follow up2", recommendedActivity);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) { }
+        });
+        queue.add(request);
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }

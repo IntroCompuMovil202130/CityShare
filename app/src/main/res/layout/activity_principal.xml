@@ -78,6 +78,19 @@
 
 
     <TextView
+        android:id="@+id/textView9"
+        android:layout_width="271dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="30dp"
+        android:width="120sp"
+        android:height="300sp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/textView7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -13,10 +13,23 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 import main.DTOs.StoryPrincipal;
 
@@ -27,6 +40,9 @@ public class preguessActivity extends AppCompatActivity {
     ImageView photo;
     ImageView profile;
     Button adivinar;
+    TextView hintTemp;
+    TextView hintWeather;
+
 
     private StoryPrincipal story;
 
@@ -38,6 +54,9 @@ public class preguessActivity extends AppCompatActivity {
         inflate();
 
         updateUI();
+
+        //For hint
+        getWeatherForecastRest();
 
         estadistica.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +73,33 @@ public class preguessActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    //Consumes rest service for hint pointing
+    private void getWeatherForecastRest(){
+        String lat = story.getUbicacion().getLatitude().toString();
+        String lon = story.getUbicacion().getLongitude().toString();
+        String url = "https://www.7timer.info/bin/api.pl?lon=" + lon + "&lat=" + lat + "&product=two&output=json";
+//        String url = "https://www.boredapi.com/api/activity";
+        Log.d("API TEST", url);
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    String weatherType = StringUtils.substringBetween(response,"\"weather\" : " , "}");
+                    hintWeather.setText("Pista 2 - El clima es: " + weatherType);
+                    Log.d("Follow up", weatherType);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) { }
+        });
+        queue.add(request);
+
     }
 
     private void updateUI() {
@@ -86,6 +132,9 @@ public class preguessActivity extends AppCompatActivity {
         });
         //Get name
         name.setText(story.getNombre());
+
+        //Get temp hint
+        hintTemp.setText("Pista 1 - La temperatura es: " + story.getTemperatura().toString() + " °C");
     }
 
     private void inflate() {
@@ -95,5 +144,7 @@ public class preguessActivity extends AppCompatActivity {
         photo = findViewById(R.id.preGuessPhoto);
         profile = findViewById(R.id.preGuessProfile);
         story = (StoryPrincipal) getIntent().getSerializableExtra("Historia");
+        hintTemp = findViewById(R.id.textView10);
+        hintWeather = findViewById(R.id.textView11);
     }
 }
