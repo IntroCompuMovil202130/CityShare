@@ -108,6 +108,7 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
     private Sensor temp;
     private StringBuilder msg = new StringBuilder(2048);
     private SensorEvent event;
+    private String tempVal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +149,8 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
     }
 
     public void onSensorChanged(SensorEvent event) {
-        msg.insert(0, event.values[0] + " °C");
+        //msg.insert(0, event.values[0] + " °C");
+        tempVal = String.valueOf(event.values[0]);
         Log.d("TEMP", String.valueOf(event.values[0]));
     }
 
@@ -362,7 +364,8 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
                         ref.child("Users").child(user.getUid()).setValue(myUser);
                         //TODO: Lectura de sensor de temperatura
                         StoryPrincipal story = new StoryPrincipal(myUser.getUserName(),uri,
-                                "images/"+user.getUid()+"/contactImage",new Loc(currentLocation),0d, 0, 0d);
+                                "images/"+user.getUid()+"/contactImage",new Loc(currentLocation),
+                                Double.valueOf(tempVal), 0, 0d);
                         ref.child("Stories").child(user.getUid()).child(myUser.getStories().toString()).setValue(story);
                     }
                 }

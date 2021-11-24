@@ -132,6 +132,9 @@ public class preguessActivity extends AppCompatActivity {
         });
         //Get name
         name.setText(story.getNombre());
+
+        //Get temp hint
+        hintTemp.setText("Pista 1 - La temperatura es: " + story.getTemperatura().toString() + " °C");
     }
 
     private void inflate() {
