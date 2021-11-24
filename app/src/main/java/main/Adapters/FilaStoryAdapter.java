@@ -1,8 +1,11 @@
 package main.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -46,43 +56,36 @@ public class FilaStoryAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
+        StorageReference ref = FirebaseStorage.getInstance().getReference();
+
         FilaStory filaStory = (FilaStory) getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.fila_story, parent, false);
         }
 
-        ImageView picture = (ImageView) convertView.findViewById(R.id.fotoStory);
-        TextView status = (TextView) convertView.findViewById(R.id.estadoStory);
-        TextView guesses = (TextView) convertView.findViewById(R.id.noAdivinanzas);
-        TextView distance = (TextView) convertView.findViewById(R.id.distPromedio);
+        ImageView picture = convertView.findViewById(R.id.fotoStory);
+        TextView status = convertView.findViewById(R.id.estadoStory);
+        TextView guesses = convertView.findViewById(R.id.noAdivinanzas);
+        TextView distance = convertView.findViewById(R.id.distPromedio);
 
-
-//        switch (filaStory.getPicture()) {
-//            case 1:
-//                picture.setImageResource(R.drawable.miami);
-//            case 2:
-//                picture.setImageResource(R.drawable.boston);
-//            case 3:
-//                picture.setImageResource(R.drawable.london);
-//            case 4:
-//                picture.setImageResource(R.drawable.miami);
-//            case 5:
-//                picture.setImageResource(R.drawable.boston);
-//            case 6:
-//                picture.setImageResource(R.drawable.london);
-//            default:
-//                picture.setImageResource(R.drawable.miami);
-//        }
-
-        picture.setImageResource(R.drawable.miami3);
-
-        String sourceString = "<b>Estado: </b>" + "Disponible";
-        status.setText(Html.fromHtml(sourceString));
-        sourceString = "<b>No. Adivinanzas: </b>" + filaStory.getGuesses();
-        guesses.setText(Html.fromHtml(sourceString));
-        sourceString = "<b>Dist. Promedio: </b>" + filaStory.getDistance();
-        distance.setText(Html.fromHtml(sourceString));
+        final long MEGA = 1024*1024;
+        ref.child(filaStory.getPicture()).getBytes(MEGA).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                picture.setImageBitmap(bitmap);
+                status.setText(filaStory.getStatus());
+                guesses.setText(String.valueOf(filaStory.getGuesses()));
+                distance.setText(String.valueOf(filaStory.getDistance()));
+                Log.d("TAG", "onSuccess: "+filaStory.toString());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("STORAGE", e.toString());
+            }
+        });
 
         return convertView;
     }
