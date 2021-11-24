@@ -1,13 +1,5 @@
 package main.Pantallas;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,11 +11,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
-
 import android.provider.MediaStore;
-
 import android.util.Log;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -31,12 +20,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -61,6 +51,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import main.Adapters.StoryPrincipalAdapter;
 import main.DTOs.Loc;
@@ -203,14 +199,16 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
                         Log.i("TAG", "Encontró usuario: " + myUser.getName());
                         String name = myUser.getName();
                         userName.setText(name);
-                        /*
-                        Integer puntosAct = myUser.getPoints();
-                        puntos.setText(puntosAct);
+
+                        Double puntosAct = myUser.getPoints();
+                        Log.i("TAG", "Puntos: " + puntosAct);
+                        puntos.setText(String.valueOf(puntosAct));
                         Integer partidasAct = myUser.getPartidas();
-                        partidas.setText(partidasAct);
+                        Log.i("TAG", "Partidas : " + partidasAct);
+                        partidas.setText(String.valueOf(partidasAct));
                         Double promedio = myUser.getPromedio();
-                        dist.setText(promedio);
-                         */
+                        dist.setText(String.valueOf(promedio));
+
                     }
                 }
             }
