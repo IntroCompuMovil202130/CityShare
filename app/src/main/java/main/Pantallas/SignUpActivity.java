@@ -211,7 +211,7 @@ public class SignUpActivity extends AppCompatActivity {
             progressDialog.show();
             // Defining the child of storageReference
             StorageReference ref
-                    = storageReference.child("images/" + us.getUid()+"/"+" contactImage");
+                    = storageReference.child("images/" + us.getUid()+"/"+"contactImage");
             ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(

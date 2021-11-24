@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,15 +16,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import main.Model.AdapterMensajes;
 import main.Model.Mensaje;
+import main.Model.Usuario;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -35,7 +39,10 @@ public class ChatActivity extends AppCompatActivity {
     private AdapterMensajes adapter;
     FirebaseDatabase database;
     DatabaseReference databaseReference;
+    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
     FirebaseUser us;
+    String name,name2;
+    public static final String TAG=" Cityshare ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +52,18 @@ public class ChatActivity extends AppCompatActivity {
         LinearLayoutManager l= new LinearLayoutManager(this);
         recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(adapter);
+        Bundle b=getIntent().getExtras();
+        if(b!=null){
+            name=b.getString("nombre");
+        }
+        nombre.setText(name);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseReference.push().setValue(new Mensaje(txtMensaje.getText().toString(),nombre.getText().toString(),"","1","00:00"));
+                databaseReference.push().setValue(new Mensaje(txtMensaje.getText().toString(),name2,"","1","00:00"));
+                /*databaseReference.child("chat").child(currentFirebaseUser.getUid()).child(name).setValue(
+                        new Mensaje(txtMensaje.getText().toString(),nombre.getText().toString(),"","1","00:00")
+                );*/
                 txtMensaje.setText("");
             }
         });
@@ -97,6 +112,6 @@ public class ChatActivity extends AppCompatActivity {
         txtMensaje=(EditText) findViewById(R.id.txtMensaje);
         send=(ImageButton) findViewById(R.id.btnEnviar);
         database=FirebaseDatabase.getInstance();
-        databaseReference= database.getReference("chat");//Sala chat
+        databaseReference= database.getReference();//Sala chat
     }
 }
