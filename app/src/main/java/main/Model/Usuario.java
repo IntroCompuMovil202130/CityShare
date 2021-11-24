@@ -47,15 +47,6 @@ public class Usuario {
         this.partidas = 0;
         this.promedio = 0d;
     }
-    public Usuario(String name, String userName, String email, Integer stories) {
-        this.name = name;
-        this.userName = userName;
-        this.email = email;
-        this.stories = stories;
-        this.points = 0d;
-        this.partidas = 0;
-        this.promedio = 0d;
-    }
 
     public void add(){
         this.stories = this.stories+1;
