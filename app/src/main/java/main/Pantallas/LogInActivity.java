@@ -56,6 +56,9 @@ public class LogInActivity extends AppCompatActivity {
             Intent intentNotifications = new Intent(LogInActivity.this, NotificationService.class);
             intentNotifications.putExtra("myKey" , mAuth.getUid());
             startService(intentNotifications);
+            Intent intentNotificationsChat = new Intent(LogInActivity.this, NotificationServiceChat.class);
+            intentNotificationsChat.putExtra("myKey" , mAuth.getUid());
+            startService(intentNotificationsChat);
         }else{
             correo.setText("");
             password.setText("");
