@@ -51,6 +51,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -69,6 +70,7 @@ import java.util.List;
 
 import main.Adapters.StoryPrincipalAdapter;
 import main.DTOs.StoryPrincipal;
+import main.Model.Usuario;
 
 public class GuessActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -94,6 +96,7 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
     StoryPrincipal story;
 
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +197,7 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onResponse(String response) {
                 try {
+                    newGuess(dist);
                     JSONObject json = new JSONObject(response);
                     trazarRuta(json);
                     String t = "Estuviste a " + dist + " de la ubicación real";
@@ -354,6 +358,7 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
         manager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = manager.getDefaultSensor(Sensor.TYPE_LIGHT);
         geocoder = new Geocoder(getBaseContext());
+        mAuth= FirebaseAuth.getInstance();
     }
 
     private LocationRequest createLocationRequest() {
@@ -378,5 +383,29 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
     }
     public void goBack(View v){
         startActivity(new Intent(this,PrincipalActivity.class));
+    }
+
+    private void newGuess(String dist) {
+        ref.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    if(mAuth.getUid().toString().equals(snapshot.getKey())) {
+                        Usuario myUser = snapshot.getValue(Usuario.class);
+                        Log.i("TAG", "Encontró usuario: " + myUser.getName());
+
+
+                        //Invocaciones de nuevo guess
+                        myUser.addPartidas();
+                        myUser.addPoints(dist);
+                        myUser.recalcPromedio();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("DB","Error de consulta");
+            }
+        });
     }
 }
