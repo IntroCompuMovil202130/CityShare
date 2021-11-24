@@ -13,6 +13,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -65,7 +69,7 @@ import main.DTOs.onStoryListener;
 import main.Model.Usuario;
 
 
-public class PrincipalActivity extends AppCompatActivity implements onStoryListener {
+public class PrincipalActivity extends AppCompatActivity implements onStoryListener, SensorEventListener {
 
     String galleryPermission = Manifest.permission.READ_EXTERNAL_STORAGE;
     String cameraPermission = Manifest.permission.CAMERA;
@@ -98,10 +102,22 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
     private FirebaseUser user;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+
+    //For temperature
+    private SensorManager mgr;
+    private Sensor temp;
+    private StringBuilder msg = new StringBuilder(2048);
+    private SensorEvent event;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
+
+        //For temp
+        mgr = (SensorManager) this.getSystemService(SENSOR_SERVICE);
+        temp = mgr.getDefaultSensor( Sensor.TYPE_AMBIENT_TEMPERATURE);
+
         inflate();
         updateName();
         getRecommendedActivity();
@@ -122,6 +138,18 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
         super.onResume();
         storiesList = new ArrayList<>();
         updateUI();
+        mgr.registerListener(this, temp, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        mgr.unregisterListener(this, temp);
+        super.onPause();
+    }
+
+    public void onSensorChanged(SensorEvent event) {
+        msg.insert(0, event.values[0] + " °C");
+        Log.d("TEMP", String.valueOf(event.values[0]));
     }
 
     private void updateUI() {
@@ -407,6 +435,11 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
             public void onErrorResponse(VolleyError error) { }
         });
         queue.add(request);
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
 }
