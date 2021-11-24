@@ -40,6 +40,9 @@ public class preguessActivity extends AppCompatActivity {
     ImageView photo;
     ImageView profile;
     Button adivinar;
+    TextView hintTemp;
+    TextView hintWeather;
+
 
     private StoryPrincipal story;
 
@@ -138,5 +141,7 @@ public class preguessActivity extends AppCompatActivity {
         photo = findViewById(R.id.preGuessPhoto);
         profile = findViewById(R.id.preGuessProfile);
         story = (StoryPrincipal) getIntent().getSerializableExtra("Historia");
+        hintTemp = findViewById(R.id.textView10);
+        hintWeather = findViewById(R.id.textView11);
     }
 }
