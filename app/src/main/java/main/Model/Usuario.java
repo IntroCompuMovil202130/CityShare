@@ -7,12 +7,18 @@ public class Usuario {
     private Integer stories;
     byte[] image;
     String code;
+    private Double points;
+    private Integer partidas;
+    private Double promedio;
 
     public Usuario(String name, String userName, String email, String code) {
         this.name = name;
         this.userName = userName;
         this.email = email;
         this.code = code;
+        this.points = 0d;
+        this.partidas = 0;
+        this.promedio = 0d;
     }
 
     public String getCode() {
@@ -30,9 +36,7 @@ public class Usuario {
     public void setImage(byte[] image) {
         this.image = image;
     }
-    private Double points;
-    private Integer partidas;
-    private Double promedio;
+
 
 
     public Usuario(String name, String userName, String email) {
