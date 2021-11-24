@@ -39,6 +39,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -57,6 +63,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import org.apache.commons.lang3.StringUtils;
 
 import main.Adapters.StoryPrincipalAdapter;
 import main.DTOs.DTOStories;
@@ -104,6 +112,7 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
         setContentView(R.layout.activity_principal);
         inflate();
         updateName();
+        getRecommendedActivity();
 
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -383,5 +392,26 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
         Intent intent = new Intent(PrincipalActivity.this,preguessActivity.class);
         intent.putExtra("Historia",storiesList.get(position));
         startActivity(intent);
+    }
+
+    private void getRecommendedActivity(){
+        String url = "https://www.boredapi.com/api/activity";
+        Log.d("API TEST", url);
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    Log.d("Follow up2", response);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) { }
+        });
+        queue.add(request);
+
     }
 }

@@ -88,7 +88,6 @@ public class preguessActivity extends AppCompatActivity {
 
                     Log.d("Follow up", weatherType);
                 } catch (Exception e) {
-                    Log.d("THIS SHIT","fuck my life");
                     e.printStackTrace();
                 }
             }
