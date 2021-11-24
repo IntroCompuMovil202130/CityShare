@@ -30,17 +30,27 @@ public class Usuario {
     public void setImage(byte[] image) {
         this.image = image;
     }
+    private Double points;
+    private Integer partidas;
+    private Double promedio;
+
 
     public Usuario(String name, String userName, String email) {
         this.name = name;
         this.userName = userName;
         this.email = email;
+        this.points = 0d;
+        this.partidas = 0;
+        this.promedio = 0d;
     }
     public Usuario(String name, String userName, String email, Integer stories) {
         this.name = name;
         this.userName = userName;
         this.email = email;
         this.stories = stories;
+        this.points = 0d;
+        this.partidas = 0;
+        this.promedio = 0d;
     }
 
     public void add(){
@@ -79,6 +89,30 @@ public class Usuario {
         this.email = email;
     }
 
+    public Double getPoints() {
+        return points;
+    }
+
+    public void setPoints(Double points) {
+        this.points = points;
+    }
+
+    public Integer getPartidas() {
+        return partidas;
+    }
+
+    public void setPartidas(Integer partidas) {
+        this.partidas = partidas;
+    }
+
+    public Double getPromedio() {
+        return promedio;
+    }
+
+    public void setPromedio(Double promedio) {
+        this.promedio = promedio;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -86,7 +120,28 @@ public class Usuario {
                 ", userName='" + userName + '\'' +
                 ", email='" + email + '\'' +
                 ", stories=" + stories +
+                ", points=" + points +
+                ", partidas=" + partidas +
+                ", promedio=" + promedio +
                 '}';
+    }
+
+    public void addPoints(String dist){
+        Double distance = Double.valueOf(dist);
+
+        Double points = 50000d - distance;
+
+        this.points = this.points + points;
+    }
+
+    public void addPartidas(){
+        this.partidas += 1;
+    }
+    
+    public void recalcPromedio(){
+        try {
+            this.promedio = this.points / this.partidas;
+        }catch (Exception e){}
     }
 
     public Usuario() {
