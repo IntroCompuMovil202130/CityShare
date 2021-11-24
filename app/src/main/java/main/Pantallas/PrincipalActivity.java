@@ -88,6 +88,9 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
     ImageView imagenEjemplo;
     ImageButton signOut;
     TextView userName;
+    TextView puntos;
+    TextView partidas;
+    TextView dist;
     RecyclerView stories;
     List<StoryPrincipal> storiesList;
     StoryPrincipalAdapter adapterStory;
@@ -168,6 +171,14 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
                         Log.i("TAG", "Encontró usuario: " + myUser.getName());
                         String name = myUser.getName();
                         userName.setText(name);
+                        /*
+                        Integer puntosAct = myUser.getPoints();
+                        puntos.setText(puntosAct);
+                        Integer partidasAct = myUser.getPartidas();
+                        partidas.setText(partidasAct);
+                        Double promedio = myUser.getPromedio();
+                        dist.setText(promedio);
+                         */
                     }
                 }
             }
@@ -362,6 +373,9 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
         botonCrearPostGaleria = findViewById(R.id.botonPost2);
         botonHistorias = findViewById(R.id.botonHistorias);
         userName = findViewById(R.id.tvUserName);
+        puntos = findViewById(R.id.puntos);
+        partidas = findViewById(R.id.partidas);
+        dist = findViewById(R.id.dist);
         chat = findViewById(R.id.botonChat);
         LinearLayoutManager layoutManager = new LinearLayoutManager(PrincipalActivity.this,LinearLayoutManager.HORIZONTAL,false);
         stories = findViewById(R.id.rvStories);

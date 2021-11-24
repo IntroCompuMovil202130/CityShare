@@ -27,7 +27,7 @@ public class PostsActivity extends AppCompatActivity  implements SensorEventList
 
     }
     @Override
-    protected void onResume() {
+    protected void onResume() { 
         mgr.registerListener(this, temp, SensorManager.SENSOR_DELAY_NORMAL);
 
         super.onResume();
