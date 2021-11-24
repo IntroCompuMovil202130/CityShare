@@ -402,7 +402,8 @@ public class PrincipalActivity extends AppCompatActivity implements onStoryListe
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("Follow up2", response);
+                    String recommendedActivity = StringUtils.substringBetween(response,"\"activity\":" , ",");
+                    Log.d("Follow up2", recommendedActivity);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
