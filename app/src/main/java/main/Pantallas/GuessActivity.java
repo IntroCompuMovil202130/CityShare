@@ -392,13 +392,14 @@ public class GuessActivity extends AppCompatActivity implements OnMapReadyCallba
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                     if(mAuth.getUid().toString().equals(snapshot.getKey())) {
                         Usuario myUser = snapshot.getValue(Usuario.class);
-                        Log.i("TAG", "Encontró usuario: " + myUser.getName());
+                        Log.i("TAG", "Actualizando usuario: " + myUser.getName());
 
 
                         //Invocaciones de nuevo guess
                         myUser.addPartidas();
                         myUser.addPoints(dist);
                         myUser.recalcPromedio();
+                        ref.child("Users").child(snapshot.getKey()).setValue(myUser);
                     }
                 }
             }
