@@ -24,8 +24,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import main.DTOs.StoryPrincipal;
 
@@ -80,10 +84,11 @@ public class preguessActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    //JSONObject json = new JSONObject(response);
-                    Log.d("Follow up", response);
+                    String weatherType = StringUtils.substringBetween(response,"\"weather\" : " , "}");
+
+                    Log.d("Follow up", weatherType);
                 } catch (Exception e) {
-                    Log.d("Follow up", "fuck my life");
+                    Log.d("THIS SHIT","fuck my life");
                     e.printStackTrace();
                 }
             }
